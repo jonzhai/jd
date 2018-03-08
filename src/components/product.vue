@@ -15,28 +15,45 @@
             <a href="#" class="fr">更多&gt;</a>
           </div>
           <div class="product_content">
-            <ul class="clearfix">
-              <li>
-                <a href="#"><img src="../assets/images/detail01.jpg" alt=""></a>
-                <p>￥10.00</p>
-                <p>￥100.00</p>
-              </li>
-              <li>
-                <a href="#"><img src="../assets/images/detail02.jpg" alt=""></a>
-                <p>￥10.00</p>
-                <p>￥100.00</p>
-              </li>
-              <li>
-                <a href="#"><img src="../assets/images/detail01.jpg" alt=""></a>
-                <p>￥10.00</p>
-                <p>￥100.00</p>
-              </li>
-            </ul>
+              <!-- swiper -->
+              <swiper :options="swiperOption">
+                <swiper-slide>Slide 1</swiper-slide>
+                <swiper-slide>Slide 2</swiper-slide>
+                <swiper-slide>Slide 3</swiper-slide>
+                <swiper-slide>Slide 4</swiper-slide>
+                <swiper-slide>Slide 5</swiper-slide>
+                <swiper-slide>Slide 6</swiper-slide>
+                <swiper-slide>Slide 7</swiper-slide>
+                <swiper-slide>Slide 8</swiper-slide>
+                <swiper-slide>Slide 9</swiper-slide>
+                <swiper-slide>Slide 10</swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+              </swiper>
           </div><!-- product_content -->
         </div><!-- product -->
 </template>
 <script>
+  import Vue from 'vue'
+  import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+  // require styles
+  import 'swiper/dist/css/swiper.css'
+
+  Vue.use(VueAwesomeSwiper, /* { default global options } */)
 export default{
+    data() {
+      return {
+        swiperOption: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+          freeMode: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          }
+        }
+      }
+    },
     mounted:function(){
       this.CountDown();
 
@@ -69,7 +86,7 @@ export default{
             }else{
               console.log('您来晚了！！！')
             }
-          },1000)   
+          },1000)
       }
 
 

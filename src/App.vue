@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <div class="container">
+      <div class="contain">
         <headers></headers>
         <navs></navs>
         <product></product>
@@ -39,7 +39,7 @@
 </script>
 
 <style scoped>
-.container{
+.contain{
   width: 100%;
   max-height: 5000px;
   overflow: hidden;
