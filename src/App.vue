@@ -1,29 +1,15 @@
 <template>
-  <div id="app">
-      <div class="contain">
-        <headers></headers>
-        <navs></navs>
-        <product></product>
-        <jdMarket></jdMarket>
-        <footers></footers>
-      </div>
+  <div class="app">
+      <commonHeader></commonHeader>
   </div>
 </template>
 
 <script>
-  import headers from './components/header.vue';
-  import navs from './components/nav.vue';
-  import product from './components/product.vue';
-  import jdMarket from './components/jdMarket.vue';
-  import footers from './components/footer.vue';
+  import commonHeader from './components/common_header.vue';
   export default {
     name: 'app',
     components:{
-      headers: headers,
-      navs: navs,
-      product: product,
-      jdMarket: jdMarket,
-      footers:footers,
+      commonHeader: commonHeader,
     },
     data () {
       return {
@@ -39,10 +25,12 @@
 </script>
 
 <style scoped>
-.contain{
+.app{
   width: 100%;
-  max-height: 5000px;
+  max-width:768px;
+  min-width:200px;
   overflow: hidden;
   background-color: #eee;
+  margin:0 auto;
 }
 </style>

@@ -16,6 +16,7 @@
 /* input标签 去掉默认样式 */
 input{
 	border: none;
+	outline: none;
 	-webkit-appearance: none;
 }
 
@@ -29,12 +30,12 @@ ol,ul{
 	list-style: none;
 }
 
-/* 清除浮动 */
-.fl{
-	float: left;
+/* 清除浮动*/ 
+.f_l{
+	float: left !important;
 }
-.fr{
-	float: right;
+.f_r{
+	float: right !important;
 }
 
 /* 清除浮动 */
@@ -46,4 +47,5 @@ ol,ul{
 	height: 0;
 	visibility: hidden;
 	clear: both;
-}
+	width: 0;
+} 
