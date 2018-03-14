@@ -49,3 +49,11 @@ ol,ul{
 	clear: both;
 	width: 0;
 } 
+#app{
+	height: 100%;
+}
+body{
+	max-width: 640px;
+	min-width: 240px;
+	margin: 0 auto !important;
+}

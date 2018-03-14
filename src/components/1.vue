@@ -57,7 +57,7 @@
           this.$router.go(-1);
         },
         toSearchWt(){
-          var keyWord = document.querySelector('#searchIpt').value;
+          var keyWord = document.querySelector('searchIpt').value;
           sessionStorage.setItem("searchKeyWord",keyWord);
           this.$router.push({path:'/goodsListPage'});
         }
@@ -78,7 +78,7 @@
   background-image:url(../assets/images/header-bg.png);
   padding:10px;
   display:flex;
-  position: absolute;
+  position:fixed;
   top:0;
 }
 .search-container{
@@ -123,7 +123,6 @@
 }
 .closeSearch{
   padding: 10px;
-  margin-top: 50px;
 }
 .closeSearch >h4{
   padding: 0 8px;
@@ -141,8 +140,5 @@
   padding: 3px 5px;
   color:#686868;
   background-color: #f0f2f5;
-}
-.hotSearch{
-  margin-top: 0;
 }
 </style>

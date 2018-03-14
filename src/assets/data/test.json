@@ -1,0 +1,11 @@
+{
+    "clLists":[
+        {"cat_id":1,"content":"飞利浦剃须刀"}
+    ],
+    "hotLists":[
+        {"cat_id":5,"content":"不粘锅煎锅"},
+        {"cat_id":2,"content":"录音笔"},
+        {"cat_id":3,"content":"橄榄油润肤"},
+        {"cat_id":4,"content":"仙人球防辐射"}
+    ]
+}

@@ -1,22 +1,17 @@
 import Vue from 'vue';
 import $ from 'zeptojs';
 import VueRouter from "vue-router";
-import App from './App.vue';
-import Login from './components/Login.vue';
-import search from './components/search.vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import routes from './assets/js/routes.js';
+
+
 Vue.use(VueRouter);
-const router = new VueRouter({
-	routes:[
-		{path:'/',component:App},
-		{path:'/login',component:Login},
-		{path:'/forgetPassword',component:Login},
-		{path:'/reg',component:Login},
-		{path:'/search',component:search},
-	]
+Vue.prototype.$axios = axios;
 
-});
-
+const router = new VueRouter(routes);
 new Vue({
 	router,
-  el: '#app',
+	axios,
+	el: '#app',
 })

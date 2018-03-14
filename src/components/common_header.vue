@@ -1,47 +1,73 @@
 <template>
     <div class="header">
-        <div class="search-container">
-          <div>
-            <span class="logo"></span>
-            <span class="search-icon"></span>
-            <input name="searchIpt" placeholder="请输入关键词！" @click="toSearch">
-          </div>
+            <div class="search-container">
+              <div>
+                <span class="logo"></span>
+                <span class="search-icon"></span>
+                <input name="searchIpt" placeholder="请输入关键词！" @click="toSearch">
+              </div>
+            </div>
+            <div class="login" @click="toLogin">登录</div>
         </div>
-        <div class="login" @click="toLogin">登录</div>
-    </div>
+    
 </template>
 <script>
   export default{
+      data(){
+        return {
+          scrollTop:0,
+          header:null,
+        }
+      },
       mounted:function(){
-
+        this.header =   document.querySelector('.header');
+         window.addEventListener('scroll',this.menu);
+        this.header.style.width = document.body.clientWidth+"px";
       },
       methods:{
-        toLogin: function(){
+        toLogin(){
           this.$router.push({path:'/login'})
         },
-        toSearch:function(){
+        toSearch(){
           this.$router.push({path:'/search'})
+        },
+        menu() {
+          this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+          // var state = this.header.style.position;
+          // if(this.scrollTop>0){
+          //     if(state !== "fixed"){
+          //       this.header.style.position= "fixed";
+          //     }
+          // }else{
+          //   if(state !== "absolute"){
+          //       this.header.style.position= "absolute";
+          //     }
+          // }
+          var rate= this.scrollTop/200;
+          if(rate>1){
+            rate =1;
+          };
+          this.header.style.backgroundColor='rgba(201, 21, 35,'+rate+')';
         }
 
 
-      }//methods
+      },//methods
+
 
   }//export
-
-
-
-
 </script>  
 <style scoped>
 .header{
-  width:100%;
+  /* width: 100%; */
   height:50px;
   line-height:50px;
-  background-color:rgba(196,0,0,1);
+  background-color:rgba(196,0,0,0);
   padding:10px;
   display:flex;
-  position:fixed;
+  position: fixed;
   top:0;
+  z-index: 99;
+  /* transition: all 0.5s; */
 }
 .search-container{
   height:30px;

@@ -8,21 +8,36 @@
             <input id="searchIpt" name="searchIpt" placeholder="请输入关键词！" @click="toSearch" autofocus="autofocus">
           </div>
         </div>
-        <div class="login" @click="toSearchWt">搜索</div>
+        <div class="top_nav" @click="openTopNav"><span>. . .</span></div>
       </div>
-      <div class="closeSearch" v-if="clLists.length">
-          <h4>最近搜索</h4>
-          <div class="closeList">
-            <span v-for="item in clLists"><a href="javascript:void(0);" :data-id="item.cat_id">{{item.content}}</a></span>
-          </div>  
+      <div class="filter1">
+          <div>
+            <span>综合</span>
+          </div>
+         <div>
+            <span>销量</span>
+          </div>
+          <div>
+            <span>价格</span>
+          </div>
+          <div>
+            <span>筛选</span>
+          </div>
       </div>
-      <div class="hotSearch closeSearch">
-          <h4>热门搜索</h4>
-          <div class="closeList">
-            <span v-for="item in hotLists"><a href="javascript:void(0);" :data-id="item.cat_id">{{item.content}}</a></span>
-          </div>  
+       <div class="filter1 filter2">
+          <div>
+            <span>京东物流</span>
+          </div>
+         <div>
+            <span>品牌</span>
+          </div>
+          <div>
+            <span>分类</span>
+          </div>
+          <div>
+            <span>功能</span>
+          </div>
       </div>
-    
     </div>
   
 </template>
@@ -36,15 +51,8 @@
         }
       },
       mounted:function(){
-         this.$axios.get('/src/assets/data/test.json')
-          .then(response => {
-           this.clLists = response.data.clLists;
-            this.hotLists = response.data.hotLists;
-          })
-          .catch(error=>{
-            console.log(error);
-          });
-
+          var key = sessionStorage.getItem("searchKeyWord");
+          console.log(key)
       },
       methods:{
         toLogin(){
@@ -57,9 +65,12 @@
           this.$router.go(-1);
         },
         toSearchWt(){
-          var keyWord = document.querySelector('#searchIpt').value;
+          var keyWord = document.querySelector('searchIpt').value;
           sessionStorage.setItem("searchKeyWord",keyWord);
           this.$router.push({path:'/goodsListPage'});
+        },
+        openTopNav(){
+            alert(1)
         }
 
       }//methods
@@ -108,41 +119,49 @@
   background-position:123px 8px;
 
 }
+.top_nav{
+  width:30px;
+  padding:5px;
+}
+.top_nav>span{
+  position: relative;
+  top:-19px;
+  left:3px;
+}
+.search-container .top_nav{
+  background-position:123px 8px;
+
+}
 .search-container input[name="searchIpt"]{
   flex:1;
   border-radius:20px;
  
 }
-.login{
-  width:50px;
-  height:100%;
-  line-height:30px;
-  text-align:center;
-  color:#666;
-  font-size:1.2em;
-}
-.closeSearch{
-  padding: 10px;
+.filter1{
+  display: flex;
+   justify-content:space-around;
+   padding: 5px;
+   border-top:1px solid #eee; 
+  border-bottom:1px solid #eee; 
   margin-top: 50px;
 }
-.closeSearch >h4{
-  padding: 0 8px;
-}
-.closeList{
-  display: flex;
-  flex-wrap:wrap;
-}
-.closeList >span{
+.filter1 >div{
+  flex: 1;
+  padding: 5px;
   text-align: center;
-  margin:5px 5px;
-  border-radius: 5px;
 }
-.closeList >span a{
-  padding: 3px 5px;
-  color:#686868;
-  background-color: #f0f2f5;
+.filter1 >div span{
+  height: 30px;
 }
-.hotSearch{
+.filter2{
   margin-top: 0;
+}
+.filter2>div{
+  background-color: #eee;
+  margin: 0 5px;
+  border-radius: 3px;
+}
+.filter2>div span{
+  color:#666;
 }
 </style>

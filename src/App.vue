@@ -1,15 +1,37 @@
 <template>
   <div class="app">
       <commonHeader></commonHeader>
+      <div class="content">
+        <swiperBanner></swiperBanner>
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+        <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
+      </div>
+      <commonFooter></commonFooter>
   </div>
 </template>
 
 <script>
   import commonHeader from './components/common_header.vue';
+  import swiperBanner from './components/swiperBanner.vue';
+  import commonFooter from './components/common_footer.vue';
   export default {
     name: 'app',
     components:{
-      commonHeader: commonHeader,
+      commonHeader,
+      swiperBanner,
+      commonFooter
     },
     data () {
       return {
@@ -26,11 +48,15 @@
 
 <style scoped>
 .app{
-  width: 100%;
-  max-width:768px;
-  min-width:200px;
-  overflow: hidden;
   background-color: #eee;
-  margin:0 auto;
+  width: 100%;
+  height: 100%;
+}
+.content{
+   width:100%;
+  /* overflow:auto; */
+  /* top:0px; */
+  /* position:absolute; */
+  margin-bottom:4rem;
 }
 </style>
