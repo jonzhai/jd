@@ -1,36 +1,76 @@
 <template>
     <div id="nav">
           <ul class="clearfix">
-            <li data-id="0"><a href="#"><img src="../assets/images/nav0.png" alt=""><br>分类查询</a></li>
-            <li data-id="1"><a href="#"><img src="../assets/images/nav1.png" alt=""><br>分类查询</a></li>
-            <li data-id="2"><a href="#"><img src="../assets/images/nav2.png" alt=""><br>分类查询</a></li>
-            <li data-id="3"><a href="#"><img src="../assets/images/nav3.png" alt=""><br>分类查询</a></li>
-            <li data-id="4"><a href="#"><img src="../assets/images/nav4.png" alt=""><br>分类查询</a></li>
-            <li data-id="5"><a href="#"><img src="../assets/images/nav5.png" alt=""><br>分类查询</a></li>
-            <li data-id="6"><a href="#"><img src="../assets/images/nav6.png" alt=""><br>分类查询</a></li>
-            <li data-id="7"><a href="#"><img src="../assets/images/nav7.png" alt=""><br>分类查询</a></li>
+            <li v-for="item in navs" class="navlist">
+              <a href="#"  :cat-id="item.cat_id">
+                <img :src="item.src" alt="">
+                <p v-text="item.title"></p>
+              </a>
+            </li>
+          
           </ul>
     </div>
 </template>
+<script>
+export default {
+  data(){
+    return {
+      navs:[],
+    }
+  },
+  mounted:function(){
+    this.$axios.get('/src/assets/data/nav.json')
+        .then(response => {
+          this.navs = response.data.navs;
+        })
+        .catch(error=>{
+          console.log(error);
+        });
+  },
+  methods:{
+
+  }
+}
+</script>
+
 <style scoped>
 #nav{
 	width: 100%;
 	background: #fff;
+  padding:5px;
+  height:200px;
 }
-#nav ul li{
+#nav >ul{
+  display: flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.navlist{
 	width: 25%;
-	float: left;
-	padding:5px 10px;
+  height: 50%;
+	padding:5px;
 	text-align: center;
 	cursor: pointer;
 	
 }
-#nav ul li a{
+.navlist >a{
 	color: #000;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: block;
+  
 }
-#nav ul li img{
-	width: 60%;
-	
+.navlist >a img{
+	width:60px ;
+}
+.navlist >a p{
+  height: 30px;
+  line-height: 30px;
 }
 .active{
 	background: #eee;

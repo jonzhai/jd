@@ -1,14 +1,14 @@
 <template>
     <div class="header">
-            <div class="search-container">
-              <div>
-                <span class="logo"></span>
-                <span class="search-icon"></span>
-                <input name="searchIpt" placeholder="请输入关键词！" @click="toSearch">
-              </div>
-            </div>
-            <div class="login" @click="toLogin">登录</div>
+        <div class="search-container">
+          <div>
+            <span class="logo"></span>
+            <span class="search-icon"></span>
+            <input name="searchIpt" placeholder="请输入关键词！" @click="toSearch">
+          </div>
         </div>
+        <div class="login" @click="toLogin">登录</div>
+    </div>
     
 </template>
 <script>
@@ -58,15 +58,15 @@
 </script>  
 <style scoped>
 .header{
-  /* width: 100%; */
+  width: 100%;
   height:50px;
   line-height:50px;
   background-color:rgba(196,0,0,0);
   padding:10px;
   display:flex;
   position: fixed;
-  top:0;
   z-index: 99;
+  border-top:1px solid #eee; 
   /* transition: all 0.5s; */
 }
 .search-container{

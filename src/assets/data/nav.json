@@ -1,0 +1,12 @@
+{
+    "navs":[
+        {"cat_id":0,"src":"/src/assets/images/nav0.png","title":"分类查询"},
+        {"cat_id":1,"src":"/src/assets/images/nav1.png","title":"快递运输"},
+        {"cat_id":2,"src":"/src/assets/images/nav2.png","title":"购物车"},
+        {"cat_id":3,"src":"/src/assets/images/nav3.png","title":"个人中心"},
+        {"cat_id":4,"src":"/src/assets/images/nav4.png","title":"分类查询"},
+        {"cat_id":5,"src":"/src/assets/images/nav5.png","title":"分类查询"},
+        {"cat_id":6,"src":"/src/assets/images/nav6.png","title":"分类查询"},
+        {"cat_id":7,"src":"/src/assets/images/nav7.png","title":"分类查询"}
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "products":[
+        {"product_id":0,"src":"/src/assets/images/cp1.jpg","origin_price":"$100","count_price":"$100"},
+        {"product_id":1,"src":"/src/assets/images/cp4.jpg","origin_price":"$120","count_price":"$100"},
+        {"product_id":2,"src":"/src/assets/images/cp1.jpg","origin_price":"$200","count_price":"$100"},
+        {"product_id":3,"src":"/src/assets/images/cp1.jpg","origin_price":"$300","count_price":"$100"},
+        {"product_id":4,"src":"/src/assets/images/cp4.jpg","origin_price":"$400","count_price":"$100"},
+        {"product_id":5,"src":"/src/assets/images/cp1.jpg","origin_price":"$200","count_price":"$100"},
+        {"product_id":6,"src":"/src/assets/images/cp4.jpg","origin_price":"$3200","count_price":"$100"},
+        {"product_id":7,"src":"/src/assets/images/cp1.jpg","origin_price":"$3100","count_price":"$100"}
+    ]
+}

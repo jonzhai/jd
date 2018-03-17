@@ -1,8 +1,12 @@
 <template>
   <div class="app">
       <commonHeader></commonHeader>
+     
       <div class="content">
         <swiperBanner></swiperBanner>
+        <navs></navs>
+        <product></product>
+        <jdMarket></jdMarket>
         <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
         <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
         <p>通过变量来定义列数、槽（gutter）宽、媒体查询阈值（用于确定合适让列浮动）。我们使用这些变量生成预定义的栅格类，如上所示，还有如下所示的定制 mixin。</p>  
@@ -26,12 +30,18 @@
   import commonHeader from './components/common_header.vue';
   import swiperBanner from './components/swiperBanner.vue';
   import commonFooter from './components/common_footer.vue';
+  import navs from './components/nav.vue';
+  import product from './components/product.vue';
+  import jdMarket from './components/jdMarket.vue';
   export default {
     name: 'app',
     components:{
       commonHeader,
       swiperBanner,
-      commonFooter
+      commonFooter,
+      navs,
+      product,
+      jdMarket
     },
     data () {
       return {
@@ -57,6 +67,7 @@
   /* overflow:auto; */
   /* top:0px; */
   /* position:absolute; */
-  margin-bottom:4rem;
+  /* margin-bottom:4rem; */
 }
+
 </style>

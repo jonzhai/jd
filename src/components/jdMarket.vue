@@ -1,83 +1,112 @@
 <template>
 	<div id = "jdmarket">
-	    <div class="jdmarket">
-            <div class="jdmarket_head">
-            	<span></span>
-               	<p>京东超市</p>
-            </div>
-	        <div class="jdmarket_content clearfix">
-	            <div class="jdmarket_content_left fl">
-	              <a href="#"><img src="../assets/images/cp1.jpg" alt=""></a>
-            	</div>
-            	<div class="jdmarket_content_right fl">
-	              <a href="#"><img src="../assets/images/cp2.jpg" alt=""></a>
-	              <a href="#"><img src="../assets/images/cp3.jpg" alt=""></a>
-            	</div>
-        	</div>
+		<p class="jdmarket_head">京东超市</p>
+		<div class="jdmarket_content">
+			<div class="product"  v-for="item in list">
+				<a href="#" :data-id="item.product_id">
+					<img :src="item.src" alt="">
+					<p class="describe" v-text="item.describe"></p>
+					<p class="price" v-text="item.price"></p>
+					<div class="bottom_container">
+						<span>好评率<span v-text="item.goodEvaluate"></span></span>
+						<span></span>
+						<span>看相似</span>
+					</div>
+				</a>
+			</div>
+			
+		</div>
           
-        </div>
-        <div class="more">
-          <p>点击继续加载</p>
-        </div>
 	</div>
 
 </template>
+<script>
+export default {
+  data(){
+	  return {
+		list:[],
+	  }
+  },
+	mounted:function(){
+		this.$axios.get('/src/assets/data/products.json')
+			.then(response => {
+				this.list = response.data.products;
+			})
+			.catch(error=>{
+				console.log(error);
+			});
+
+	},
+
+
+
+}
+</script>
+
 <style scoped>
 .jdmarket{
 	background: #fff;
-	width: 96%;
-	margin: 10px auto;
+	width: 100%;
+	padding: 5px;
 }
 .jdmarket_head{
 	width: 100%;
 	height: 32px;
-	position: relative;
+	line-height: 32px;
+	margin: 5px 0;
+	text-align: center;
 	border-bottom: 1px solid #eee;
+	font-size:1.5em;
+	color:#f23030;
 }
-.jdmarket_head span{
-	background: #f00;
-	position: absolute;
-	left: 10px;
-	top: 6px;
-	width: 5px;
-	height: 20px;
-}
-.jdmarket_head p{
-	position: absolute;
-	left: 20px;
-	top: 6px;
-}
+
 .jdmarket_content{
 	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap:wrap;
 }
-.jdmarket_content>div{
+.jdmarket_content>.product{
 	width: 50%;
+	/* height:205px; */
+	padding: 3px;
+	overflow: hidden;
 }
-.jdmarket_content>div img{
+.product a{
+	display: block;
+	width: 100%;
+	/* height: 100%; */
+	background: #fff;
+}
+.product a img{
 	width: 100%;
 }
-.jdmarket_content_left{
-	border-right: 1px solid #eee;
+.product a p{
+	margin-bottom: 0;
 }
-.jdmarket_content_right img:first-child{
-	border-bottom: 1px solid #eee;
+.product a .describe{
+	padding: 3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color:#000;
 }
-.jdmarket_content_left_1 img:first-child{
-	border-bottom: 1px solid #eee;
+.product a .price{
+	color:#f23030;
+	padding: 0 5px;
 }
-.jdmarket_content_right_1 {
-	border-left: 1px solid #eee;
-}
-.more{
+.bottom_container{
 	width: 100%;
-	margin-top: 3px;
-	border-top: 1px solid 	#C0C0C0;
-	border-bottom: 1px solid 	#C0C0C0;
-	height:30px;
+	height: 30px;
 	line-height: 30px;
+	padding:0 5px;
+	display: flex;
+	color:#666;
 }
-.more p{
-	text-align: center;
-	font-size: 15px;
+.bottom_container > span:nth-child(2){
+	flex:1;
+}
+.bottom_container > span:nth-child(3){
+	padding:0 3px;
+	/* border: 1px solid #eee; */
 }
 </style>

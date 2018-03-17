@@ -1,6 +1,6 @@
 <template>
 	<div id="banner">
-	    <swiper :options="swiperOption">
+	    <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide><img src="../assets/images/l1.jpg"></swiper-slide>
         <swiper-slide><img src="../assets/images/l2.jpg"></swiper-slide>
         <swiper-slide><img src="../assets/images/l3.jpg"></swiper-slide>
@@ -25,13 +25,11 @@
       data() {
         return {
           swiperOption: {
-            autoplay: true,//可选选项，自动滑动
-            effect : 'slide',
-            direction: 'horizontal',
-            autoplayDisableOnInteraction: false,
-            // slidesPerView: 1,
-            // spaceBetween: 0,
-            freeMode: true,
+            autoplay: {
+              disableOnInteraction: false
+            },//可选选项，自动滑动
+            speed:1000,
+            loop:true,
             pagination: {
               el: '.swiper-pagination',
               clickable: true

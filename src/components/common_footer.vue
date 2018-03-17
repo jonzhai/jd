@@ -39,7 +39,6 @@
   line-height:50px;
   background-color:#b7b2b2;
   /* padding:5px; */
-  display:flex;
   position: fixed;
   bottom:0;
   z-index: 99;
