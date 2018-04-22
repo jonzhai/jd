@@ -1,0 +1,52 @@
+{
+    "goodList":[
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        },
+        {
+            "product_id":0,
+            "src":"/src/assets/images/cp2.jpg",
+            "price":"$100",
+            "describe":"ERKE 男鞋跑步鞋系带简约舒适轻便运动鞋"
+        }
+    ]
+}

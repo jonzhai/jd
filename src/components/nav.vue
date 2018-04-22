@@ -2,16 +2,16 @@
     <div id="nav">
           <ul class="clearfix">
             <li v-for="item in navs" class="navlist">
-              <a href="#"  :cat-id="item.cat_id">
+              <a href="#"  :data-path="item.cat_path">
                 <img :src="item.src" alt="">
                 <p v-text="item.title"></p>
               </a>
             </li>
-          
           </ul>
     </div>
 </template>
 <script>
+import $ from 'zeptojs';
 export default {
   data(){
     return {
@@ -26,9 +26,16 @@ export default {
         .catch(error=>{
           console.log(error);
         });
+    //给导航栏注册点击事件，切换路由
+    var me = this;
+    $('#nav').on('click','a',function(){
+        var path = $(this).data('path');
+        me.$router.push({path:`${path}`});
+      })
+        
   },
   methods:{
-
+  
   }
 }
 </script>

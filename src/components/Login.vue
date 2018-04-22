@@ -6,9 +6,9 @@
   			</div>
 			<div class="content"> 
 				<form class="form-group">
-					用户名：<input class="form-control" type = "text" placeholder="请输入用户名！">
-					密码：<input class="form-control" type = "password">
-					<input class="btn btn-block btn-primary log" type = "button" value="登录">
+					用户名：<input class="form-control" type = "text" name="userName" placeholder="请输入用户名！">
+					密码：<input class="form-control" name="passWord" type = "password">
+					<input class="btn btn-block btn-primary log" type = "button" value="登录" @click="login">
 				</form>
 
 			</div>
@@ -21,6 +21,11 @@
 </template>
 <script>
 	export default{
+		mounted:function(){
+			if(this.$route.params.hasOwnProperty('name')){
+				document.querySelector('input[name="userName"]').value  = this.$route.params.name;
+			}
+		},
 		methods:{
 			toForgetPassword:function(){
     			this.$router.push({path:'/forgetPassword'})
@@ -29,7 +34,19 @@
 			toReg:function(){
     			this.$router.push({path:'/reg'})
 			},
+			login:function(){
+				var name = document.querySelector('input[name="userName"]').value.replace(/(^\s*)|(\s*$)/g,''),
+					passWord = document.querySelector('input[name="passWord"]').value.replace(/(^\s*)|(\s*$)/g,'');
+				var info = JSON.parse(localStorage.getItem(name));
+				if(info.passWord === passWord){
+					this.$router.push({path:`/login/${name}`});
+				}else{
+					alert('密码错误！请重新输入')
+				}
 
+
+				
+			},
 
 
 		}

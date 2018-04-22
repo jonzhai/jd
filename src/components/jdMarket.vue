@@ -28,13 +28,23 @@ export default {
 	  }
   },
 	mounted:function(){
+		var data = [],
+			me = this;
 		this.$axios.get('/src/assets/data/products.json')
 			.then(response => {
-				this.list = response.data.products;
+				me.list = response.data.products;
+				data = response.data.products;
 			})
 			.catch(error=>{
 				console.log(error);
 			});
+		document.onscroll = function(){
+			if(document.documentElement.scrollHeight == document.documentElement.scrollTop + document.documentElement.clientHeight){
+				data.forEach(element => {
+					me.list.push(element);
+				});
+			}
+		}
 
 	},
 

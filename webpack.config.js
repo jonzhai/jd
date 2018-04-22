@@ -47,8 +47,19 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true,
-    overlay: true
+    // noInfo: true,
+    overlay: true,
+    hot: true,
+    // port: defaultSettings.port,
+    // publicPath: defaultSettings.publicPath,
+    noInfo: false,
+    // proxy: {
+    //   '/api/*': {
+    //       target: 'http://localhost:3000',
+    //       host: 'localhost:3000',
+    //       secure: false
+    //   }
+    // }
   },
   performance: {
     hints: false

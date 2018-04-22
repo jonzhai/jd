@@ -57,9 +57,9 @@
           this.$router.go(-1);
         },
         toSearchWt(){
-          var keyWord = document.querySelector('#searchIpt').value;
-          sessionStorage.setItem("searchKeyWord",keyWord);
-          this.$router.push({path:'/goodsListPage'});
+          var keyWord = document.querySelector('#searchIpt').value || 123;
+          // sessionStorage.setItem("searchKeyWord",keyWord);
+          this.$router.push({path:`/goodsListPage/${keyWord}`});
         }
 
       }//methods
@@ -73,6 +73,8 @@
 <style scoped>
 .header{
   width:100%;
+ 	max-width: 640px;
+	min-width: 240px;
   height:50px;
   line-height:50px;
   background-image:url(../assets/images/header-bg.png);
@@ -102,7 +104,7 @@
   padding:5px;
 }
 .back{
-  background-position:-18px 5px;
+  background-position:-16px 5px;
 }
 .search-container .search-icon{
   background-position:123px 8px;

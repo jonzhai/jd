@@ -8,7 +8,7 @@
             <input id="searchIpt" name="searchIpt" placeholder="请输入关键词！" @click="toSearch" autofocus="autofocus">
           </div>
         </div>
-        <div class="top_nav" @click="openTopNav"><span>. . .</span></div>
+        <div class="top_nav" @click="openTopNav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
       </div>
       <div class="filter1">
           <div>
@@ -38,6 +38,19 @@
             <span>功能</span>
           </div>
       </div>
+      <div class="content">
+          <ul id="goodList">
+            <li class="item" v-for="item in goodList">
+              <div class="item-left">
+                <img :src="item.src" alt="">
+              </div>
+              <div class="item-right">
+                  <p class="title">{{item.describe}}</p>
+                  <p class="clearfix"><span class="goodsPrice pull-left text-danger">{{item.price}}</span><button class="addBtn pull-right btn btn-danger" @click="addInCar">加入购物车</button></p>
+              </div>
+            </li>
+          </ul>
+      </div>
     </div>
   
 </template>
@@ -46,13 +59,20 @@
       data(){
         return {
             clLists:[],
-            hotLists:[]
-
+            hotLists:[],
+            goodList:[]
         }
       },
       mounted:function(){
           var key = sessionStorage.getItem("searchKeyWord");
-          console.log(key)
+          console.log(this.$route.params)
+          this.$axios.get('/src/assets/data/goodList.json')
+          .then(response => {
+            this.goodList = response.data.goodList.slice(0,50);
+          })
+          .catch(error=>{
+            console.log(error);
+          });
       },
       methods:{
         toLogin(){
@@ -65,13 +85,15 @@
           this.$router.go(-1);
         },
         toSearchWt(){
-          var keyWord = document.querySelector('searchIpt').value;
-          sessionStorage.setItem("searchKeyWord",keyWord);
-          this.$router.push({path:'/goodsListPage'});
+
         },
         openTopNav(){
             alert(1)
+        },
+        addInCar(){
+          alert(1);
         }
+        
 
       }//methods
 
@@ -84,6 +106,8 @@
 <style scoped>
 .header{
   width:100%;
+   	max-width: 640px;
+	min-width: 240px;  
   height:50px;
   line-height:50px;
   background-image:url(../assets/images/header-bg.png);
@@ -113,7 +137,7 @@
   padding:5px;
 }
 .back{
-  background-position:-18px 5px;
+  background-position:-16px 5px;
 }
 .search-container .search-icon{
   background-position:123px 8px;
@@ -125,7 +149,7 @@
 }
 .top_nav>span{
   position: relative;
-  top:-19px;
+  top:-12px;
   left:3px;
 }
 .search-container .top_nav{
@@ -163,5 +187,35 @@
 }
 .filter2>div span{
   color:#666;
+}
+#goodList >.item{
+  display: flex;
+  padding: 15px 0;
+  min-height:132px;
+  border-bottom: 1px solid #eee;
+}
+.item-left{
+  width: 25%;
+  padding: 5px;
+}
+.item-left img{
+  width: 100%;
+  height: 100%;
+}
+.item-right{
+  flex: 1;
+}
+.item-right .title{
+  margin-bottom:30px; 
+  padding: 0 10px;
+}
+.item-right .goodsPrice{
+  display: block;
+ font-size: 1.3em;
+ margin-left: 10px;
+ margin-top: 4px;
+}
+.item-right .addBtn{
+  margin-right: 10px;
 }
 </style>

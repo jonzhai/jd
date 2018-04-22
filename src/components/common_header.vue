@@ -7,7 +7,8 @@
             <input name="searchIpt" placeholder="请输入关键词！" @click="toSearch">
           </div>
         </div>
-        <div class="login" @click="toLogin">登录</div>
+        <div class="login" @click="toLogin" v-if="!id">登录</div>
+        <div class="login" @click="toLogout" v-if="id"><span class="glyphicon glyphicon-user"></span></div>
     </div>
     
 </template>
@@ -17,12 +18,15 @@
         return {
           scrollTop:0,
           header:null,
+          id:'',
         }
       },
       mounted:function(){
         this.header =   document.querySelector('.header');
          window.addEventListener('scroll',this.menu);
-        this.header.style.width = document.body.clientWidth+"px";
+         if(typeof this.$route.params.id !== undefined){
+           this.id = this.$route.params.id;
+         }
       },
       methods:{
         toLogin(){
@@ -33,22 +37,14 @@
         },
         menu() {
           this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-          // var state = this.header.style.position;
-          // if(this.scrollTop>0){
-          //     if(state !== "fixed"){
-          //       this.header.style.position= "fixed";
-          //     }
-          // }else{
-          //   if(state !== "absolute"){
-          //       this.header.style.position= "absolute";
-          //     }
-          // }
+    
           var rate= this.scrollTop/200;
           if(rate>1){
             rate =1;
           };
           this.header.style.backgroundColor='rgba(201, 21, 35,'+rate+')';
-        }
+        },
+      
 
 
       },//methods
@@ -59,6 +55,9 @@
 <style scoped>
 .header{
   width: 100%;
+ 	max-width: 640px;
+	min-width: 240px;
+	margin: 0 auto !important;
   height:50px;
   line-height:50px;
   background-color:rgba(196,0,0,0);
