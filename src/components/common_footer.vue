@@ -1,36 +1,59 @@
 <template>
     <div class="footer">
-      <ul>
-        <li class="active"><span class="glyphicon glyphicon-home"></span><p>首页</p></li>
-        <li @click="toClassfiy"><span class="glyphicon glyphicon-list"></span><p>分类</p></li>
-        <li><span class="glyphicon glyphicon-time"></span><p>发现</p></li>
-        <li><span class="glyphicon glyphicon-shopping-cart"></span><p>购物车</p></li>
-        <li><span class="glyphicon glyphicon-user"></span><p>我的</p></li>
+      <ul ref="lis">
+        <li :class="{active: curIndex === 0}" @click="toHome"><span class="glyphicon glyphicon-home"></span><p>首页</p></li>
+        <li :class="{active: curIndex === 1}" @click="toClassfiy"><span class="glyphicon glyphicon-list"></span><p>分类</p></li>
+        <li :class="{active: curIndex === 2}"><span class="glyphicon glyphicon-time"></span><p>发现</p></li>
+        <li :class="{active: curIndex === 3}"><span class="glyphicon glyphicon-shopping-cart"></span><p>购物车</p></li>
+        <li :class="{active: curIndex === 4}" @click="toPersonalCenter"><span class="glyphicon glyphicon-user"></span><p>我的</p></li>
       </ul> 
     </div>
     
 </template>
 <script>
+  import {mapGetters} from 'vuex';
   export default{
+      props:{
+        index:{
+          type: Number,
+          required: true
+        }
+      },
       data(){
         return {
-          scrollTop:0,
-          footer:null,
+          scrollTop: 0,
+          footer: null,
+          curIndex: 0
         }
       },
       mounted:function(){
         this.footer =   document.querySelector('.footer');
-  
+        this.curIndex = this.index;
       },
       methods:{
-        toLogin(){
-          this.$router.push({path:'/login'})
+        toHome(){
+          this.$router.push({path:'/home'});
+          this.curIndex = 0;
         },
         toClassfiy(){
-          this.$router.push({path:'/classfiy'})
+          this.$router.push({path:'/classfiy'});
+            this.curIndex = 1;
         },
+        toPersonalCenter(){
+          //如果当前未登陆，则到login
+          if(this.curCount){
+            this.$router.push({path:'/personalCenter'});
+          }else{
+            this.$router.push({path:'/login'});
+          }
+          this.curIndex = 4;
+        }
     
       },//methods
+      computed:{
+        ...mapGetters(['curCount'])
+      }
+      
 
 
   }//export

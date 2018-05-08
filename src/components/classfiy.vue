@@ -8,16 +8,34 @@
             <input id="searchIpt" name="searchIpt" placeholder="请输入关键词！" @click="toSearch" autofocus="autofocus">
           </div>
         </div>
-        <div class="top_nav" @click="openTopNav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
+        <div class="top_nav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
+      </div>
+      <div class="content">
+        <div class="left">
+          <scroll ref="listContent" :data="classList" @click.native ="sClick">
+            <ul class="leftNav">
+              <li v-for="(item,index) in classList">{{item}}</li>
+            </ul> 
+          </scroll>
+        </div>
+        <div class="right">
+          <scroll>
+            <div class="detail">
+
+            </div>
+          </scroll>
+        </div>
+          
       </div>
     </div>
   
 </template>
 <script>
+  import scroll from '../base/scroll/scroll.vue';
   export default{
       data(){
         return {
-          
+          classList:[1,2,3,4,5,6,1,2,3,4,5,6,1,2,3,4,5,6],
 
         }
       },
@@ -28,7 +46,18 @@
         goBack(){
           this.$router.go(-1);
         },
-      }//methods
+        toSearch(){
+          this.$router.push({path:'/search'})
+        },
+        sClick(e){
+          console.log(e)
+          this.$refs.listContent.scrollToElement(e.target, 300,0,e.layerY-30)
+          
+        }
+      },//methods
+      components:{
+        scroll
+      }
 
   }//export
 
@@ -36,7 +65,7 @@
 
 
 </script>  
-<style scoped>
+<style lang="scss" scoped>
 .header{
   width:100%;
   height:50px;
@@ -92,31 +121,23 @@
   border-radius:20px;
  
 }
-.filter1{
-  display: flex;
-   justify-content:space-around;
-   padding: 5px;
-   border-top:1px solid #eee; 
-  border-bottom:1px solid #eee; 
+.content{
   margin-top: 50px;
-}
-.filter1 >div{
-  flex: 1;
-  padding: 5px;
-  text-align: center;
-}
-.filter1 >div span{
-  height: 30px;
-}
-.filter2{
-  margin-top: 0;
-}
-.filter2>div{
-  background-color: #eee;
-  margin: 0 5px;
-  border-radius: 3px;
-}
-.filter2>div span{
-  color:#666;
+  display: flex;
+  .left{
+    flex:1;
+    background-color: #eee;
+    text-align: center;
+    height: 300px;
+    // overflow: hidden;
+    .leftNav{
+      li{
+        padding: 5px 0;
+      }
+    }
+  }
+  .right{
+    flex:4;
+  }
 }
 </style>

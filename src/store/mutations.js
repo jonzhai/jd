@@ -1,12 +1,7 @@
-// const state = {
-//     count:40
-//   }
-
+import * as types from './mutationsType'; 
+console.log(types)
   export default{
-    increment(state){
-        state.count++;
-    },
-    decrement(state){
-    state.count--;
-    }
+    // [types.SET_LOGSTATE](state,logState){
+    //   state.isLogin = logState;
+    // }
   }

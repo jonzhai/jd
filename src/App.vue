@@ -5,7 +5,7 @@
       <navs></navs>
       <product></product>
       <jd-market></jd-market>
-      <common-footer></common-footer>
+      <common-footer :index="0"></common-footer>
   
   </div>
 </template>
@@ -17,7 +17,6 @@
   import navs from './components/nav.vue';
   import product from './components/product.vue';
   import jdMarket from './components/jdMarket.vue';
-  import { mapGetters, mapActions } from 'vuex'
   export default {
     name: 'app',
     components:{
@@ -33,7 +32,6 @@
         msg: 'Welcome to Your Vue.js App'
       }
     },
-    computed:mapGetters(['count']),
     methods:{
         toLogin:function(){
           this.$router.push({path:'/login'});
