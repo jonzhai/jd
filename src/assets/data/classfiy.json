@@ -1,0 +1,246 @@
+{
+    "status":0,
+    "热门推荐":{
+        "banner":"src/assets/images/nav0.png",
+        "lsits":[
+            {
+                "title":"热门推荐",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                        
+                    }
+                ]
+            },
+            {
+                "title":"热门推荐",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            },
+            {
+                "title":"热门推荐",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav0.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            }
+        ]
+    },
+    "手机数码":{
+        "banner":"src/assets/images/nav1.png",
+        "lsits":[
+            {
+                "title":"手机数码",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            },
+            {
+                "title":"手机数码",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            },
+            {
+                "title":"手机数码",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav1.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            }
+        ]
+    },
+    "家用电器":{
+        "banner":"src/assets/images/nav2.png",
+        "lsits":[
+            {
+                "title":"家用电器",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            },
+            {
+                "title":"家用电器",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            },
+            {
+                "title":"家用电器",
+                "goods":[
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    },
+                    {
+                        "pic":"src/assets/images/nav2.png",
+                        "des":"这是测试",
+                        "classId": 123
+                    }
+                ]
+            }
+        ]
+    }
+
+}

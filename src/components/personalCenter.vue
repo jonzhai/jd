@@ -1,9 +1,7 @@
 <template>
  <div id="personal">
-    <div class="header">
-      <div class="back" @click="goBack"></div>
-      <div class="title">我的京东</div>
-      <div class="top_nav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
+    <div class="header-container">
+      <Header title="我的京东"></Header>
     </div>
     <div class="banner">
       <div class="banner-container">
@@ -15,7 +13,7 @@
           <p>用户名：{{curCount}}</p>
         </div> 
         <div class="countManager">
-          <p><span class="glyphicon glyphicon-cog"></span>账号管理</p>
+          <p @click="toCountManager"><span class="glyphicon glyphicon-cog"></span>账号管理</p>
         </div>
       </div>
     </div>
@@ -62,7 +60,14 @@
 import {mapGetters,mapActions} from 'vuex';
 import commonFooter from './common_footer.vue';
 import jdMarket from './jdMarket.vue';
+import Header from '../base/header/header';
+
 export default {
+  data(){
+    return {
+        navshow: false
+    }
+  },
   computed:{
       ...mapGetters(['curCount'])
   },
@@ -74,11 +79,19 @@ export default {
       this.setLoginState('');
       this.$router.push('/login')
     },
+    openTopNav(){
+        this.navshow = !this.navshow;
+    },
+    toCountManager(){
+      this.$router.push('/countManage')
+      
+    },
     ...mapActions(['setLoginState'])
   },
   components:{
     commonFooter,
-    jdMarket
+    jdMarket,
+    Header
   }
 }
 </script>
@@ -87,36 +100,20 @@ export default {
   $white :#fff;
 #personal{
   background-color: #eee;
-  padding-top: 50px;
+  // padding-top: 50px;
   position: relative;
-  .header{
-    display: flex;
+  .header-container{
     height: 50px;
     width: 100%;
-    border-bottom: 1px solid #222;
-    background-color: $white;
-    position: fixed;
-    left: 0;
-    top: 0;
-    .back{
-      width:30px;
-      background-image:url(../assets/images/sprites.png);
-      background-size:200px;
-      background-clip:content-box;
-      padding:5px;
-      background-position:-16px 15px;
-    }
-    .title{
-      text-align: center;
-      line-height: 50px;
-      flex: 1;
-      font-size: 1.2em;
-    }
-    .top_nav{
-       width:50px;
-       text-align: center;
-       line-height: 50px;
-    }
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    // background-color: $white;
+    // position: fixed;
+    // left: 0;
+    // top: 0;
+    background-image: linear-gradient(0,#e0e0e0,#e0e0e0 50%,transparent 50%);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: bottom
   }
   .banner{
     padding: 10px;
@@ -161,7 +158,7 @@ export default {
 
   }
   .orders{
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: $white;
     display: flex;
     height: 90px;
@@ -181,7 +178,7 @@ export default {
     }
   }
   .history{
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: $white;
     display: flex;
     height: 90px;

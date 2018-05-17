@@ -28,9 +28,12 @@ export default {
         });
     //给导航栏注册点击事件，切换路由
     var me = this;
-    $('#nav').on('click','a',function(){
+    $('#nav').on('click','a',function(e){
         var path = $(this).data('path');
+        // console.log(path)
         me.$router.push({path:`${path}`});
+        e.stopPropagation();
+        return false;
       })
         
   },

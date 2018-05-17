@@ -2,9 +2,9 @@
 	<div id = "jdmarket">
 		<p class="jdmarket_head">京东超市</p>
 		<div class="jdmarket_content">
-			<div class="product"  v-for="item in list">
+			<div class="product"  v-for="(item,index) in list" :key="index">
 				<a href="#" :data-id="item.product_id">
-					<img :src="item.src" alt="">
+					<img v-lazy="item.src" alt="">
 					<p class="describe" v-text="item.describe"></p>
 					<p class="price" v-text="item.price"></p>
 					<div class="bottom_container">

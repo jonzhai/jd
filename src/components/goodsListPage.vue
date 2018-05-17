@@ -9,6 +9,12 @@
           </div>
         </div>
         <div class="top_nav" @click="openTopNav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
+        <transition name="fade">
+          <div class="nav-container" v-show="navshow">
+            <vertial-nav></vertial-nav>
+          </div>
+        </transition>
+      
       </div>
       <div class="filter1">
           <div>
@@ -51,171 +57,180 @@
             </li>
           </ul>
       </div>
+  
     </div>
   
 </template>
 <script>
-  export default{
-      data(){
-        return {
-            clLists:[],
-            hotLists:[],
-            goodList:[]
-        }
-      },
-      mounted:function(){
-          var key = sessionStorage.getItem("searchKeyWord");
-          console.log(this.$route.params)
-          this.$axios.get('/src/assets/data/goodList.json')
-          .then(response => {
-            this.goodList = response.data.goodList.slice(0,50);
-          })
-          .catch(error=>{
-            console.log(error);
-          });
-      },
-      methods:{
-        toLogin(){
-          this.$router.push({path:'/login'});
-        },
-        toSearch(){
-          this.$router.push({path:'/search'});
-        },
-        goBack(){
-          this.$router.go(-1);
-        },
-        toSearchWt(){
-
-        },
-        openTopNav(){
-            alert(1)
-        },
-        addInCar(){
-          alert(1);
-        }
-        
-
-      }//methods
-
-  }//export
-
-
-
-
+import vertialNav from "../base/vertialNav/vertialNav.vue";
+export default {
+  data() {
+    return {
+      clLists: [],
+      hotLists: [],
+      goodList: [],
+      navshow: false
+    };
+  },
+  mounted: function() {
+    var key = sessionStorage.getItem("searchKeyWord");
+    console.log(this.$route.params);
+    this.$axios
+      .get("/src/assets/data/goodList.json")
+      .then(response => {
+        this.goodList = response.data.goodList.slice(0, 50);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+  methods: {
+    toLogin() {
+      this.$router.push({ path: "/login" });
+    },
+    toSearch() {
+      this.$router.push({ path: "/search" });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    toSearchWt() {},
+    openTopNav() {
+      this.navshow = !this.navshow;
+      console.log(this);
+    },
+    addInCar() {
+      alert(1);
+    }
+  }, //methods
+  components: {
+    vertialNav
+  }
+}; //export
 </script>  
 <style scoped>
-.header{
-  width:100%;
-   	max-width: 640px;
-	min-width: 240px;  
-  height:50px;
-  line-height:50px;
-  background-image:url(../assets/images/header-bg.png);
-  padding:10px;
-  display:flex;
+.header {
+  width: 100%;
+  max-width: 640px;
+  min-width: 240px;
+  height: 50px;
+  line-height: 50px;
+  background-image: url(../assets/images/header-bg.png);
+  padding: 10px;
+  display: flex;
   position: absolute;
-  top:0;
+  top: 0;
 }
-.search-container{
-  height:30px;
-  flex:1;
-  background-color:#fff;
-  border-radius:20px;
-  border:1px solid #666;
+.nav-container {
+  position: absolute;
+  right: 10px;
+  bottom: -210px;
 }
-.search-container>div{
-  display:flex;
-  width:100%;
-  height:100%;
+.search-container {
+  height: 30px;
+  flex: 1;
+  background-color: #fff;
+  border-radius: 20px;
+  border: 1px solid #666;
+}
+.search-container > div {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 .back,
-.search-icon{
-  width:30px;
-  background-image:url(../assets/images/sprites.png);
-  background-size:200px;
-  background-clip:content-box;
-  padding:5px;
+.search-icon {
+  width: 30px;
+  background-image: url(../assets/images/sprites.png);
+  background-size: 200px;
+  background-clip: content-box;
+  padding: 5px;
 }
-.back{
-  background-position:-16px 5px;
+.back {
+  background-position: -16px 5px;
 }
-.search-container .search-icon{
-  background-position:123px 8px;
-
+.search-container .search-icon {
+  background-position: 123px 8px;
 }
-.top_nav{
-  width:30px;
-  padding:5px;
+.top_nav {
+  width: 30px;
+  padding: 5px;
 }
-.top_nav>span{
+.top_nav > span {
   position: relative;
-  top:-12px;
-  left:3px;
+  top: -12px;
+  left: 3px;
 }
-.search-container .top_nav{
-  background-position:123px 8px;
-
+.search-container .top_nav {
+  background-position: 123px 8px;
 }
-.search-container input[name="searchIpt"]{
-  flex:1;
-  border-radius:20px;
- 
+.search-container input[name="searchIpt"] {
+  flex: 1;
+  border-radius: 20px;
 }
-.filter1{
+.filter1 {
   display: flex;
-   justify-content:space-around;
-   padding: 5px;
-   border-top:1px solid #eee; 
-  border-bottom:1px solid #eee; 
+  justify-content: space-around;
+  padding: 5px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   margin-top: 50px;
 }
-.filter1 >div{
+.filter1 > div {
   flex: 1;
   padding: 5px;
   text-align: center;
 }
-.filter1 >div span{
+.filter1 > div span {
   height: 30px;
 }
-.filter2{
+.filter2 {
   margin-top: 0;
 }
-.filter2>div{
+.filter2 > div {
   background-color: #eee;
   margin: 0 5px;
   border-radius: 3px;
 }
-.filter2>div span{
-  color:#666;
+.filter2 > div span {
+  color: #666;
 }
-#goodList >.item{
+#goodList > .item {
   display: flex;
   padding: 15px 0;
-  min-height:132px;
+  min-height: 132px;
   border-bottom: 1px solid #eee;
 }
-.item-left{
+.item-left {
   width: 25%;
   padding: 5px;
 }
-.item-left img{
+.item-left img {
   width: 100%;
   /* height: 100%; */
 }
-.item-right{
+.item-right {
   flex: 1;
 }
-.item-right .title{
-  margin-bottom:30px; 
+.item-right .title {
+  margin-bottom: 30px;
   padding: 0 10px;
 }
-.item-right .goodsPrice{
+.item-right .goodsPrice {
   display: block;
- font-size: 1.3em;
- margin-left: 10px;
- margin-top: 4px;
+  font-size: 1.3em;
+  margin-left: 10px;
+  margin-top: 4px;
 }
-.item-right .addBtn{
+.item-right .addBtn {
   margin-right: 10px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

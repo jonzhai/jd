@@ -3,8 +3,8 @@
       <ul ref="lis">
         <li :class="{active: curIndex === 0}" @click="toHome"><span class="glyphicon glyphicon-home"></span><p>首页</p></li>
         <li :class="{active: curIndex === 1}" @click="toClassfiy"><span class="glyphicon glyphicon-list"></span><p>分类</p></li>
-        <li :class="{active: curIndex === 2}"><span class="glyphicon glyphicon-time"></span><p>发现</p></li>
-        <li :class="{active: curIndex === 3}"><span class="glyphicon glyphicon-shopping-cart"></span><p>购物车</p></li>
+        <li :class="{active: curIndex === 2}" @click="toDetail"><span class="glyphicon glyphicon-time"></span><p>发现</p></li>
+        <li :class="{active: curIndex === 3}" @click="toCart"><span class="glyphicon glyphicon-shopping-cart"></span><p>购物车</p></li>
         <li :class="{active: curIndex === 4}" @click="toPersonalCenter"><span class="glyphicon glyphicon-user"></span><p>我的</p></li>
       </ul> 
     </div>
@@ -37,7 +37,7 @@
         },
         toClassfiy(){
           this.$router.push({path:'/classfiy'});
-            this.curIndex = 1;
+          this.curIndex = 1;
         },
         toPersonalCenter(){
           //如果当前未登陆，则到login
@@ -47,6 +47,12 @@
             this.$router.push({path:'/login'});
           }
           this.curIndex = 4;
+        },
+        toDetail(){
+           this.$router.push({path:'/goodsDetail/123/goods'});
+        },
+        toCart(){
+           this.$router.push({path:'/cart'});
         }
     
       },//methods
