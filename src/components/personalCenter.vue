@@ -105,15 +105,19 @@ export default {
   .header-container{
     height: 50px;
     width: 100%;
-    border-bottom: 1px solid rgba(0,0,0,0.5);
-    // background-color: $white;
-    // position: fixed;
-    // left: 0;
-    // top: 0;
-    background-image: linear-gradient(0,#e0e0e0,#e0e0e0 50%,transparent 50%);
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
-    background-position: bottom
+    position: relative;
+    // border-bottom: 1px solid rgba(0,0,0,0.5);
+    &:after{
+      content: "";
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      background-color: #e5e5e5;
+      height: 1px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
   }
   .banner{
     padding: 10px;
@@ -196,5 +200,7 @@ export default {
     }
   }
 }
+
+
 </style>
 

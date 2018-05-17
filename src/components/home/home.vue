@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="home">
       <common-header></common-header>
       <swiper-banner></swiper-banner>
       <navs></navs>
@@ -33,3 +33,10 @@
     }
   }
 </script>
+<style scoped>
+.home{
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+}
+</style>
