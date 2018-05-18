@@ -18,7 +18,7 @@
       <div class="product_content">
           <!-- swiper -->
           <swiper :options="swiperOption">
-            <swiper-slide v-for="item in products">
+            <swiper-slide v-for="(item,index) in products" :key="index">
               <a href="#" class="product_list" :data-id = "item.product_id">
                   <img :src="item.src" alt="">
                   <p v-text="item.count_price">$100.00</p>

@@ -1,18 +1,38 @@
 <template>
-    <div class="radio">
-        <div :class="{option:true,active:showOption}">
-            <span v-show="showOption" class="glyphicon glyphicon-ok"></span>
+    <div class="radios" @click="checkItem()">
+        <div :class="{option:true,active:isChecked}">
+            <span v-show="isChecked" class="glyphicon glyphicon-ok"></span>
         </div>
     </div>
 </template>
 <script>
 export default {
     props:{
-        showOption:{
+        checked:{
             type: Boolean,
-            default: false
+            default: true
         }
-
+    },
+    data(){
+        return {
+            isChecked: true
+        }
+    },
+    watch:{
+        checked:function(){
+            this.isChecked = this.checked;
+        }
+    },
+    methods:{
+        checkItem(){
+            this.isChecked = !this.isChecked
+            if(this.isChecked){
+                this.$emit('checked')
+            }else{
+                this.$emit('unchecked')
+                
+            }
+        },
     }
 }
 </script>

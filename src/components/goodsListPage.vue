@@ -5,7 +5,7 @@
         <div class="search-container">
           <div>
             <span class="search-icon"></span>
-            <input id="searchIpt" name="searchIpt" placeholder="请输入关键词！" @click="toSearch" autofocus="autofocus">
+            <input ref="searchIpt"  name="searchIpt" placeholder="请输入关键词！" @click="toSearch" autofocus="autofocus">
           </div>
         </div>
         <div class="top_nav" @click="openTopNav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
@@ -46,16 +46,19 @@
       </div>
       <div class="content">
           <ul id="goodList">
-            <li class="item" v-for="item in goodList">
+            <li class="item" v-for="(item,index) in goodList" :key="index">
               <div class="item-left">
                 <img :src="item.src" alt="">
               </div>
               <div class="item-right">
                   <p class="title">{{item.describe}}</p>
-                  <p class="clearfix"><span class="goodsPrice pull-left text-danger">{{item.price}}</span><button class="addBtn pull-right btn btn-danger" @click="addInCar">加入购物车</button></p>
+                  <p class="clearfix"><span class="goodsPrice pull-left text-danger">{{item.price}}</span><button class="addBtn pull-right btn btn-danger" @click="addInCar(item)">加入购物车</button></p>
               </div>
             </li>
           </ul>
+          <div class="toast-container" >
+            <toast-squre title="ok" @close="close" v-if="showToast"></toast-squre>
+          </div>
       </div>
   
     </div>
@@ -63,20 +66,24 @@
 </template>
 <script>
 import vertialNav from "../base/vertialNav/vertialNav.vue";
+import {mapGetters,mapActions} from 'vuex';
+import Order from 'src/assets/js/order.js';
+import toastSqure from 'base/toast/toast_squre.vue';
 export default {
   data() {
     return {
       clLists: [],
       hotLists: [],
       goodList: [],
-      navshow: false
+      navshow: false,
+      showToast: false
     };
   },
   mounted: function() {
-    var key = sessionStorage.getItem("searchKeyWord");
-    console.log(this.$route.params);
-    this.$axios
-      .get("/src/assets/data/goodList.json")
+    // var key = sessionStorage.getItem("searchKeyWord");
+    console.log();
+    this.$refs.searchIpt.value = this.$route.params.key;
+    this.$axios.get("/src/assets/data/goodList.json")
       .then(response => {
         this.goodList = response.data.goodList.slice(0, 50);
       })
@@ -99,12 +106,19 @@ export default {
       this.navshow = !this.navshow;
       console.log(this);
     },
-    addInCar() {
-      alert(1);
-    }
+    addInCar(order) {
+      // console.log(order)
+      this.addCarGoods(new Order(order));
+      this.showToast = true;
+    },
+    close(){
+      this.showToast = !this.showToast;
+    },
+    ...mapActions(['addCarGoods'])
   }, //methods
   components: {
-    vertialNav
+    vertialNav,
+     toastSqure
   }
 }; //export
 </script>  
@@ -232,5 +246,12 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.toast-container{
+  position: fixed;
+  left: 50%;
+  top:30%;
+  transform: translate3d(-50%,-50%,0);
 }
 </style>

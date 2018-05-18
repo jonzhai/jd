@@ -2,7 +2,7 @@
   <div class="detail-container">
       <div class="header">
           <div class="back" @click="back">
-              <span class="glyphicon glyphicon-menu-left"></span>
+              <!-- <span class="glyphicon glyphicon-menu-left"></span> -->
           </div>
           <ul class="tab">
               <router-link tag="li" to="goods" replace>商品</router-link>
@@ -36,6 +36,7 @@
 </template>
 <script>
 import vertialNav from '../base/vertialNav/vertialNav.vue';
+
 export default {
   data(){
     return {
@@ -74,9 +75,15 @@ export default {
             border-bottom: 1px solid #e5e5e5;
             .back{
                 width: 50px;
-                font-size: 2em;
-                line-height: 50px;
-                text-align: center;
+                // font-size: 2em;
+                // line-height: 50px;
+                // text-align: center;
+                // width:30px;
+                background-image:url(../assets/images/sprites.png);
+                background-size:250px;
+                background-clip:content-box;
+                background-position: -14px 10px;
+                padding:10px 15px;
             }
             .tab{
                 flex: 1;

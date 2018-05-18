@@ -4,7 +4,7 @@
         <li :class="{active: curIndex === 0}" @click="toHome"><span class="glyphicon glyphicon-home"></span><p>首页</p></li>
         <li :class="{active: curIndex === 1}" @click="toClassfiy"><span class="glyphicon glyphicon-list"></span><p>分类</p></li>
         <li :class="{active: curIndex === 2}" @click="toDetail"><span class="glyphicon glyphicon-time"></span><p>发现</p></li>
-        <li :class="{active: curIndex === 3}" @click="toCart"><span class="glyphicon glyphicon-shopping-cart"></span><p>购物车</p></li>
+        <li :class="{cart:true,active: curIndex === 3}" @click="toCart"><span class="glyphicon glyphicon-shopping-cart"></span><span class="badge">{{getTotal.num}}</span><p>购物车</p></li>
         <li :class="{active: curIndex === 4}" @click="toPersonalCenter"><span class="glyphicon glyphicon-user"></span><p>我的</p></li>
       </ul> 
     </div>
@@ -57,7 +57,7 @@
     
       },//methods
       computed:{
-        ...mapGetters(['curCount'])
+        ...mapGetters(['curCount','getTotal'])
       }
       
 
@@ -113,6 +113,20 @@
 .footer > ul li span
 {
   color:inherit;
+}
+.cart{
+  position: relative;
+} 
+.cart .badge{
+  position: absolute;
+  background-color: #f00;
+  color:#fff;
+  right: 17px;
+  top: 0;
+  font-size: 12px;
+  padding: 3px;
+  height: 20px;
+  width: 20px;
 }
 
 </style>

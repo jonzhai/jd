@@ -65,13 +65,13 @@ module.exports = {
     // port: defaultSettings.port,
     // publicPath: defaultSettings.publicPath,
     noInfo: false,
-    // proxy: {
-    //   '/api/*': {
-    //       target: 'http://localhost:3000',
-    //       host: 'localhost:3000',
-    //       secure: false
-    //   }
-    // }
+    proxy: {
+      '/api/*': {
+          target: 'http://localhost:3000',
+          host: 'localhost:3000',
+          secure: false
+      }
+    }
   },
   performance: {
     hints: false
