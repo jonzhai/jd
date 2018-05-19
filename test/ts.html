@@ -27,8 +27,11 @@
         dv.on('tap', function(e) {
             console.log(e.eventType)
         })
+        dv.on('longtap', function(e) {
+            console.log(e.eventType)
+        })
         dv.on('drag', function(e) {
-            console.log(e)
+            console.log(e.eventType)
         })
     </script>
 </body>

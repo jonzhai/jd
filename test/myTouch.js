@@ -76,23 +76,23 @@
                 obj.tempX = e.touches[0].screenX;
                 obj.tempY = e.touches[0].screenY;
                 obj.tempTime = e.timeStamp;
-                var type = me._checkType(obj);
-                if (/swip/gi.test(type)) {
-                    // console.log(1)
-                    if (typeof me.callbackArr.drag === "undefined") {
-                        return;
-                    }
-                    obj.eventType = 'drag';
-                    me.trigger('drag', Object.assign(e, obj))
+                // var type = me._checkType(obj);
+                // if (/swip/gi.test(type)) {
+                // console.log(1)
+                if (typeof me.callbackArr.drag === "undefined") {
+                    return;
                 }
+                obj.eventType = 'drag';
+                me.trigger('drag', Object.assign(e, obj))
+                    // }
 
             })
             this.dom.addEventListener('touchend', function(e) {
                 // console.log(e)
                 //检查动作类型
+                obj.endTime = e.timeStamp;
                 var type = me._checkType(obj);
                 obj.eventType = type;
-                obj.endTime = e.timeStamp;
                 //如果判断为左右或者上下滑动，则同时出发滑动事件
                 if (/swip/gi.test(type)) {
                     me.trigger(me.eventType.swipe, Object.assign(e, obj))
@@ -106,11 +106,11 @@
 
         }
         _checkType(obj) {
-            //分析起止点，分析方向和距离，以此判断事件类型e.timeStamp
-            var dtX, dtY, dtTime, dtS, eventType = this.eventType;
+            //分析起止点，分析方向和距离，以此判断事件类型
+            var dtX, dtY, dtTime, eventType = this.eventType;
             if (typeof obj.tempX === "undefined") {
                 dtTime = obj.endTime - obj.startTime;
-                if (dtTime >= 300) {
+                if (dtTime >= 500) {
                     return eventType.longtap;
                 } else {
                     return eventType.tap;
