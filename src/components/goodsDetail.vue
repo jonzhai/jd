@@ -48,6 +48,9 @@ export default {
         // $('.content').swipe(function(){
         //     me.curIndex++;
         // })
+        document.querySelector('.detail-container').addEventListener('touchmove',function(e){
+            console.log(e)
+        })
   },
   methods:{
     openTopNav(){

@@ -22,7 +22,7 @@
            <div class="money">
                总计：<span>{{getTotal.money | dollar}}</span>
            </div>
-           <div class="checkOut">
+           <div class="checkOut" :class="{red:getTotal.num !== 0,grey:getTotal.num === 0}" @click="payTheBill">
                <span class="leads">去结算</span><span>({{getTotal.num}}件)</span>
            </div>
         </div>
@@ -58,6 +58,9 @@ export default {
                 return item;
             })
             this.changeCarGoods(newarr);
+        },
+        payTheBill(){
+            alert("总共: $"+this.getTotal.money)
         },
         ...mapActions(['changeCarGoods'])
     },
@@ -138,10 +141,15 @@ export default {
                 justify-content: center;
                 align-items: center;
                 margin-left: 10px;
-                background-color: #e4393c;
                 color:#fff;
                 .leads{
                    font-size: 1.5em; 
+                }
+                &.red{
+                    background-color: #e4393c;
+                }
+                &.grey{
+                    background-color: #666;
                 }
             }
         }

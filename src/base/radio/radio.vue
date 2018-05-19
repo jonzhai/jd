@@ -25,11 +25,11 @@ export default {
     },
     methods:{
         checkItem(){
-            this.isChecked = !this.isChecked
+            // this.isChecked = !this.isChecked
             if(this.isChecked){
-                this.$emit('checked')
-            }else{
                 this.$emit('unchecked')
+            }else{
+                this.$emit('checked')
                 
             }
         },

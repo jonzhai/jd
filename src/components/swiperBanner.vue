@@ -1,6 +1,6 @@
 <template>
 	<div id="banner">
-	    <swiper :options="swiperOption" ref="mySwiper">
+	    <swiper :options="swiperOption" ref="mySwiper" @click="test">
         <swiper-slide><img src="../assets/images/l1.jpg"></swiper-slide>
         <swiper-slide><img src="../assets/images/l2.jpg"></swiper-slide>
         <swiper-slide><img src="../assets/images/l3.jpg"></swiper-slide>
@@ -40,6 +40,9 @@
         methods:{
           toLogin: function(){
             this.$router.push({path:'/login'})
+          },
+          test(e){
+            console.log(e)
           },
 
         }//methods

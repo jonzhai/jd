@@ -77,7 +77,8 @@ export default {
         }
         .count-detail{
             display: flex;
-            margin: 12px 10px;
+            margin: 12px 10px 0 10px;
+
             border-bottom: 1px solid rgba(0,0,0,0.3);
             .left{
                 width: 50px;
@@ -120,10 +121,12 @@ export default {
         }
         .logo{
             width: 100px;
-            height: 20px;
-            margin: 0 auto;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAAoCAMAAACMwkUuAAAABGdBT…IN2+2rHNt6fOXMcv1et11yiT1UNZO/ud2uKYpSK60ssPwD8ruu+Ly+Rh0AAAAASUVORK5CYII=) no-repeat;
-            background-size: 100%; 
+            height: 40px;
+            margin: 10px auto;
+            background-image: url(../assets/images/buy-logo.png);
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;  
         }
     }
 
