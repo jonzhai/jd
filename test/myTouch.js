@@ -144,3 +144,4 @@
         return new touchTarget(ele);
     }
 })(window)
+//test
