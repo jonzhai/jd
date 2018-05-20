@@ -4,20 +4,20 @@
           <div class="back" @click="back">
               <!-- <span class="glyphicon glyphicon-menu-left"></span> -->
           </div>
-          <ul class="tab">
-              <router-link tag="li" to="goods" replace>商品</router-link>
-              <router-link tag="li" to="detail" replace>详情</router-link>
-              <router-link tag="li" to="evalute" replace>评价</router-link>
+          <ul class="tab" @click="changeTab" ref="ul">
+              <router-link tag="li" to="goods" replace data-id=0  data-to="goods">商品</router-link>
+              <router-link tag="li" to="detail" replace data-id=1 data-to="detail">详情</router-link>
+              <router-link tag="li" to="evalute" replace data-id=2 data-to="evalute">评价</router-link>
           </ul>
           <div class="top_nav" @click="openTopNav"><span class="glyphicon glyphicon-option-horizontal"></span></div>
-            <transition name="fade" mode="out-in">
+            <transition name="slide1" mode="out-in">
                 <div class="nav-container" v-show="navshow">
                     <vertial-nav></vertial-nav>
                 </div>
             </transition>
       </div>
       <div class="content">
-        <transition name="fade">     
+        <transition :name="slideDrection">     
             <router-view></router-view>
         </transition>   
       </div>
@@ -36,21 +36,34 @@
 </template>
 <script>
 import vertialNav from '../base/vertialNav/vertialNav.vue';
-
+import $$ from "src/assets/js/myTouch.js";
 export default {
   data(){
     return {
-        navshow: false
+        navshow: false,
+        curIndex: 0,
+        slideDrection: 'slide-right'
     }
   },
   mounted:function(){
       var me =this;
-        // $('.content').swipe(function(){
-        //     me.curIndex++;
-        // })
-        document.querySelector('.detail-container').addEventListener('touchmove',function(e){
-            console.log(e)
+        $$('.content').on('swipleft',function(e){
+            if(me.curIndex<2){
+                me.slideDrection = "slide-right";
+                me.curIndex++;
+               var adress =  me.$refs.ul.children[me.curIndex].dataset.to;
+               me.$router.replace(adress);
+            }
         })
+         $$('.content').on('swipright',function(e){
+            if(me.curIndex > 0){
+                 me.slideDrection = "slide-left";
+                me.curIndex--;
+               var adress =  me.$refs.ul.children[me.curIndex].dataset.to;
+               me.$router.replace(adress);
+            }
+        })
+     
   },
   methods:{
     openTopNav(){
@@ -58,6 +71,10 @@ export default {
     },
     back(){
         this.$router.back();
+    },
+    changeTab(e){
+        this.slideDrection = "slide-right";
+        this.curIndex = e.target.dataset.id;
     }
   },
   components:{
@@ -152,11 +169,17 @@ export default {
         }
 
     }
-    .fade-enter-active{
+    .slide-right-enter-active,.slide-left-enter-active,.slide1-enter-active,.slide1-leave-active{
         transition: all 0.5s;
     }
-    .fade-enter{
+    .slide-right-enter{
           transform: translate3d(400px,20px,0)
+    }
+  .slide-left-enter{
+          transform: translate3d(-400px,20px,0)
+    }
+    .slide1-enter,.slide1-leave-to{
+          transform: translate3d(100px,0,0)
     }
 </style>
 

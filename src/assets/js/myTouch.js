@@ -19,7 +19,7 @@
                     longtap: 'longtap',
                     swipe: 'swipe',
                     swipleft: 'swipleft',
-                    swipright: 'swiperight',
+                    swipright: 'swipright',
                     swipup: 'swipup',
                     swipdown: 'swipdown',
                     drag: 'drag'
@@ -110,7 +110,6 @@
         _checkType(obj) {
             //分析起止点，分析方向和距离，以此判断事件类型
             var dtX, dtY, dtTime, eventType = this.eventType;
-            //如果没有touchmove事件，则判定为tap或者longtap
             if (typeof obj.tempX === "undefined") {
                 dtTime = obj.endTime - obj.startTime;
                 if (dtTime >= 500) {
@@ -148,4 +147,5 @@
     }
 
 })(window)
-// export default window.$$;
+
+export default window.$$;

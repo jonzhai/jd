@@ -30,4 +30,16 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.detail{
+  position: relative;
+ .toast-container{
+    position: absolute;
+    left: 50%;
+    top:150px;
+    transform: translate3d(-50%,-50%,0);
+  }
+}
+ 
+</style>
 
