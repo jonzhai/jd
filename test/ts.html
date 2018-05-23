@@ -36,6 +36,7 @@
     <button onclick="Sinature.clear()">清空</button>
     <button onclick="Sinature.save()">保存</button>
     <button onclick="Sinature.show()">展示</button>
+    <input type="file" onclick="Sinature.upload(event)" value="上传" accept="image/*" />
     <script>
         Sinature = {
             canvas: null,
@@ -47,6 +48,8 @@
                 var me = this;
                 me.canvas = document.querySelector(selector);
                 me.context = me.canvas.getContext('2d');
+                me.context.fillStyle = "#fff";
+                me.context.fillRect(0, 0, me.canvas.width, me.canvas.height);
                 me.canvas.addEventListener('touchstart', function(e) {
                     me.isTouchMove = true;
                     var touchTarget = e.touches[0];
@@ -88,6 +91,23 @@
                 }
                 img.src = this.img;
 
+            },
+            upload: function(e) {
+                var ipt = e.target,
+                    me = this;
+                ipt.onchange = function() {
+                    var file = this.files[0],
+                        reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = new Image();
+                        img.onload = function() {
+                            me.context.drawImage(this, 10, 10, 200, 200);
+                        }
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+
+                }
             },
             _draw() {
                 var ctx = this.context;
