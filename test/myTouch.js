@@ -47,8 +47,16 @@
             }
             //解绑事件
         off(eventType, callback) {
+            //如果不传参数，则取消全部事件
+            if (arguments.length === 0) {
+                this.callbackArr = {};
+            }
+            //如果当前事件队列为空
             if (typeof this.callbackArr[eventType] === "undefined") {
                 return;
+                //如果不传回调，则把当前事件队列置空
+            } else if (!callback) {
+                this.callbackArr[eventType].length = 0;
             } else {
                 let index = this.callbackArr[eventType].findIndex(function(item, index) {
                     return Object.is(item, callback)

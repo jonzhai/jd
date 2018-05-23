@@ -7,8 +7,8 @@
   			</div>
 			<div class="content"> 
 				<form class="form-group">
-					用户名：<input class="form-control" type = "text" name="userName" placeholder="请输入用户名！">
-					密码：<input class="form-control" name="passWord" type = "password">
+					用户名：<input class="form-control" type = "text" name="userName" placeholder="请输入用户名！" ref= "userName">
+					密码：<input class="form-control" name="passWord" type = "password" placeholder="请输入密码！" ref="passWord">
 					<input class="btn btn-block btn-primary log" type = "button" value="登录" @click="login">
 				</form>
 				<toast v-if="ptext" @close="closeToast" :title="ptext"></toast>	
@@ -32,9 +32,15 @@
 			}
 		},
 		mounted:function(){
+			setTimeout(()=>{
+				this.$refs.userName.value = '';
+				this.$refs.passWord.value ='';
+			},500)
+		
 			if(this.$route.params.hasOwnProperty('name')){
 				document.querySelector('input[name="userName"]').value  = this.$route.params.name;
 			}
+
 		},
 		methods:{
 			toForgetPassword:function(){
@@ -79,6 +85,8 @@
 </script>	
 
 <style scoped>
+
+
 .header{
 	display: flex;
 }

@@ -3,37 +3,112 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
         #dv1 {
             height: 300px;
-            width: 300px;
+            width: 100%;
+            box-sizing: border-box;
             border: 1px solid #000;
             margin: 0 auto;
         }
+        
+        #dv1 canvas {
+            width: 100%;
+            height: 100%;
+        }
     </style>
-    <script src="./myTouch.js"></script>
+    <!-- <script src="./myTouch.js"></script> -->
 </head>
 
 <body>
-    <p></p>
-    <div id="dv1"></div>
+
+    <div id="dv1">
+        <canvas id="canvas"></canvas>
+    </div>
+    <button onclick="Sinature.clear()">清空</button>
+    <button onclick="Sinature.save()">保存</button>
+    <button onclick="Sinature.show()">展示</button>
     <script>
-        var dv = $$('#dv1');
-        dv.on('swipe', function(e) {
-            console.log(e.eventType)
-        })
-        dv.on('tap', function(e) {
-            console.log(e.eventType)
-        })
-        dv.on('longtap', function(e) {
-            console.log(e.eventType)
-        })
-        dv.on('drag', function(e) {
-            console.log(e.eventType)
-        })
+        Sinature = {
+            canvas: null,
+            context: null,
+            isTouchMove: false,
+            pos: {},
+            img: '',
+            init: function(selector) {
+                var me = this;
+                me.canvas = document.querySelector(selector);
+                me.context = me.canvas.getContext('2d');
+                me.canvas.addEventListener('touchstart', function(e) {
+                    me.isTouchMove = true;
+                    var touchTarget = e.touches[0];
+                    me.pos.startX = touchTarget.clientX;
+                    me.pos.startY = touchTarget.clientY;
+                })
+                me.canvas.addEventListener('touchmove', function(e) {
+                    if (!me.isTouchMove) {
+                        return
+                    };
+                    var touchTarget = e.touches[0];
+
+                    // console.log(touchTarget);
+                    clearTimeout(timeid);
+                    var timeid = setTimeout(function() {
+                        me.pos.endX = touchTarget.clientX;
+                        me.pos.endY = touchTarget.clientY;
+                        console.log(me.pos)
+                        me._draw();
+                        me.pos.startX = me.pos.endX;
+                        me.pos.startY = me.pos.endY;
+                    }, 20)
+
+                })
+                me.canvas.addEventListener('touchend', function(e) {
+                    me.isTouchMove = false;
+                })
+            },
+            clear: function() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            },
+            save: function() {
+                this.img = this.canvas.toDataURL();
+            },
+            show: function() {
+                var img = new Image();
+                img.onload = function() {
+                    document.body.appendChild(this)
+                }
+                img.src = this.img;
+
+            },
+            _draw() {
+                var ctx = this.context;
+                ctx.beginPath();
+                ctx.lineWidth = 3;
+                ctx.moveTo(this.pos.startX, this.pos.startY / 2);
+                ctx.lineTo(this.pos.endX, this.pos.endY / 2);
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+        }
+        Sinature.init('#canvas');
+
+
+        function getOffset(ele) {
+            if (ele.offsetParent.nodeName === "BODY") {
+                return;
+            }
+            return ele.offsetLeft + getOffset(ele.offsetParent);
+        }
     </script>
 </body>
 
