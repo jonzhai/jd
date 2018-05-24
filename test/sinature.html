@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        #dv1 {
+            height: 300px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #000;
+            margin: 0 auto;
+        }
+        
+        #dv1 canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .toolBar {
+            display: flex;
+            flex-flow: wrap;
+        }
+        
+        .toolBar button {
+            width: 30%;
+            margin: 5px;
+        }
+        
+        .toolBar input {
+            width: 33.3%;
+        }
+    </style>
+    <!-- <script src="./myTouch.js"></script> -->
+</head>
+
+<body>
+
+    <div id="dv1">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="toolBar">
+        <button onclick="Sinature.clear()">清空</button>
+        <button onclick="Sinature.save()" id="btn">保存</button>
+        <button onclick="Sinature.show()">展示</button>
+        <button onclick="Sinature.Eraser(event)">橡皮擦</button>
+        <input type="file" onclick="Sinature.upload(event)" value="上传" accept="image/*" />
+    </div>
+
+    <script>
+        Sinature = {
+            canvas: null,
+            context: null,
+            isTouchMove: false,
+            pos: {},
+            img: '',
+            offset: {},
+            init: function(selector) {
+                var me = this;
+                me.canvas = document.querySelector(selector);
+                me.context = me.canvas.getContext('2d');
+                //获取元素相对于body的offset
+                me.offset.left = me.tool.getOffsetLeft(me.canvas);
+                me.offset.top = me.tool.getOffsetTop(me.canvas);
+                console.log(me.offset)
+                    //绘制白色背景
+                me.context.fillStyle = "#fff";
+                me.context.fillRect(0, 0, me.canvas.width, me.canvas.height);
+                var handlerMove = function(e) {
+                    if (!me.isTouchMove) {
+                        return
+                    };
+                    var touchTarget = e.touches[0];
+
+                    // 设置定时器进行节流
+                    clearTimeout(timeid);
+                    var timeid = setTimeout(function() {
+                        //设置最近一次move事件发生时的位置
+                        me.pos.endX = touchTarget.clientX - me.offset.left;
+                        me.pos.endY = touchTarget.clientY - me.offset.top;
+
+                        //绘制
+                        me._draw();
+                        //本次绘画完成，将下一次绘画的开始点置为本次的结束点
+                        me.pos.startX = me.pos.endX;
+                        me.pos.startY = me.pos.endY;
+                    }, 20)
+
+                }
+
+
+                me.canvas.addEventListener('touchstart', function(e) {
+                    me.isTouchMove = true;
+                    var touchTarget = e.touches[0];
+
+                    //记录点击开始位置
+                    me.pos.startX = touchTarget.clientX - me.offset.left;
+                    me.pos.startY = touchTarget.clientY - me.offset.top;
+
+                    //在开始触摸事件中开启监听move事件
+                    me.canvas.addEventListener('touchmove', handlerMove);
+                })
+
+
+
+                me.canvas.addEventListener('touchend', function(e) {
+                    me.isTouchMove = false;
+                    //在触摸结束事件中移除move事件
+                    me.canvas.removeEventListener('touchmove', handlerMove);
+                })
+            },
+            clear: function() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            },
+            save: function() {
+                this.img = this.canvas.toDataURL();
+            },
+            show: function() {
+                var img = new Image();
+                img.onload = function() {
+                    document.body.appendChild(this)
+                }
+                img.src = this.img;
+
+            },
+            upload: function(e) {
+                var ipt = e.target,
+                    me = this;
+                ipt.onchange = function() {
+                    var file = this.files[0],
+                        reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = new Image();
+                        img.onload = function() {
+                            me.context.drawImage(this, 10, 10, 200, 200);
+                        }
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+
+                }
+            },
+            Eraser: function(e) {
+                console.log(e)
+            },
+            _draw() {
+                var ctx = this.context;
+                ctx.beginPath();
+                ctx.lineWidth = 3;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                ctx.moveTo(Math.ceil(this.pos.startX), Math.ceil(this.pos.startY / 2));
+                ctx.lineTo(Math.ceil(this.pos.endX), Math.ceil(this.pos.endY / 2));
+                ctx.stroke();
+                ctx.closePath();
+            },
+            tool: {
+                getOffsetLeft: function(ele) {
+                    if (!ele || ele.nodeName === "BODY") {
+                        return 0;
+                    }
+                    return ele.offsetLeft + this.getOffsetLeft(ele.offsetParent);
+                },
+                getOffsetTop: function(ele) {
+                    if (!ele || ele.nodeName === "BODY") {
+                        return 0;
+                    }
+                    return ele.offsetTop + this.getOffsetTop(ele.offsetParent);
+                },
+            }
+
+        }
+        Sinature.init('#canvas');
+    </script>
+</body>
+
+</html>

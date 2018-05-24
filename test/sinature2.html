@@ -23,6 +23,21 @@
         #dv1 canvas {
             width: 100%;
             height: 100%;
+            cursor: pointer;
+        }
+        
+        .toolBar {
+            display: flex;
+            flex-flow: wrap;
+        }
+        
+        .toolBar button {
+            width: 30%;
+            margin: 5px;
+        }
+        
+        .toolBar input {
+            width: 33.3%;
         }
     </style>
     <!-- <script src="./myTouch.js"></script> -->
@@ -33,10 +48,14 @@
     <div id="dv1">
         <canvas id="canvas"></canvas>
     </div>
-    <button onclick="Sinature.clear()">清空</button>
-    <button onclick="Sinature.save()">保存</button>
-    <button onclick="Sinature.show()">展示</button>
-    <input type="file" onclick="Sinature.upload(event)" value="上传" accept="image/*" />
+    <div class="toolBar">
+        <button onclick="Sinature.clear()">清空</button>
+        <button onclick="Sinature.save()" id="btn">保存</button>
+        <button onclick="Sinature.show()">展示</button>
+        <button onclick="Sinature.Eraser(event)">橡皮擦</button>
+        <input type="file" onclick="Sinature.upload(event)" value="上传" accept="image/*" />
+    </div>
+
     <script>
         Sinature = {
             canvas: null,
@@ -44,37 +63,47 @@
             isTouchMove: false,
             pos: {},
             img: '',
+            offset: {},
             init: function(selector) {
                 var me = this;
                 me.canvas = document.querySelector(selector);
                 me.context = me.canvas.getContext('2d');
+                //获取元素相对于body的offset
+                me.offset.left = me.tool.getOffsetLeft(me.canvas);
+                me.offset.top = me.tool.getOffsetTop(me.canvas);
+                console.log(me.offset)
+                    //绘制白色背景
                 me.context.fillStyle = "#fff";
                 me.context.fillRect(0, 0, me.canvas.width, me.canvas.height);
-                me.canvas.addEventListener('touchstart', function(e) {
+
+
+
+                me.canvas.addEventListener('mousedown', function(e) {
                     me.isTouchMove = true;
-                    var touchTarget = e.touches[0];
-                    me.pos.startX = touchTarget.clientX;
-                    me.pos.startY = touchTarget.clientY;
+                    var touchTarget = e;
+                    console.log(touchTarget)
+                    me.pos.startX = touchTarget.clientX - me.offset.left;
+                    me.pos.startY = touchTarget.clientY - me.offset.top;
                 })
-                me.canvas.addEventListener('touchmove', function(e) {
+                me.canvas.addEventListener('mousemove', function(e) {
                     if (!me.isTouchMove) {
                         return
                     };
-                    var touchTarget = e.touches[0];
+                    var touchTarget = e;
 
                     // console.log(touchTarget);
                     clearTimeout(timeid);
                     var timeid = setTimeout(function() {
-                        me.pos.endX = touchTarget.clientX;
-                        me.pos.endY = touchTarget.clientY;
-                        console.log(me.pos)
+                        me.pos.endX = touchTarget.clientX - me.offset.left;
+                        me.pos.endY = touchTarget.clientY - me.offset.top;
+                        // console.log(me.pos)
                         me._draw();
                         me.pos.startX = me.pos.endX;
                         me.pos.startY = me.pos.endY;
                     }, 20)
 
                 })
-                me.canvas.addEventListener('touchend', function(e) {
+                me.canvas.addEventListener('mouseup', function(e) {
                     me.isTouchMove = false;
                 })
             },
@@ -109,26 +138,35 @@
 
                 }
             },
+            Eraser: function(e) {
+                console.log(e)
+            },
             _draw() {
                 var ctx = this.context;
                 ctx.beginPath();
                 ctx.lineWidth = 3;
-                ctx.moveTo(this.pos.startX, this.pos.startY / 2);
-                ctx.lineTo(this.pos.endX, this.pos.endY / 2);
+                ctx.moveTo(Math.ceil(this.pos.startX * 2), Math.ceil(this.pos.startY / 2));
+                ctx.lineTo(Math.ceil(this.pos.endX * 2), Math.ceil(this.pos.endY / 2));
                 ctx.stroke();
                 ctx.closePath();
+            },
+            tool: {
+                getOffsetLeft: function(ele) {
+                    if (ele.nodeName === "BODY") {
+                        return 0;
+                    }
+                    return ele.offsetLeft + this.getOffsetLeft(ele.offsetParent);
+                },
+                getOffsetTop: function(ele) {
+                    if (ele.nodeName === "BODY") {
+                        return 0;
+                    }
+                    return ele.offsetTop + this.getOffsetTop(ele.offsetParent);
+                },
             }
 
         }
         Sinature.init('#canvas');
-
-
-        function getOffset(ele) {
-            if (ele.offsetParent.nodeName === "BODY") {
-                return;
-            }
-            return ele.offsetLeft + getOffset(ele.offsetParent);
-        }
     </script>
 </body>
 
