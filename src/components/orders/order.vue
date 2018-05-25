@@ -33,13 +33,13 @@ export default {
     },
     data(){
         return {
-            orderList:[]
+            orderList:[],
+            curOrder: null
         }
     },
-    // mounted:function(){
-    // //    this.getCarGoods=  this.getCarGoods;
-    //    this.curOrder = ;
-    // },
+    created:function(){
+       this.curOrder = this.getCarGoods[this.itemIndex];
+    },
     methods:{
         lock(){
            this.curOrder.checked = true; 
@@ -75,11 +75,20 @@ export default {
         ...mapActions(['changeCarGoods'])
     },
     computed:{
-        curOrder:function(){
-            return this.getCarGoods[this.itemIndex];
-        },
+        // curOrder:function(){
+        //     return this.getCarGoods[this.itemIndex];
+        // },
         ...mapGetters(['getCarGoods'])
         
+    },
+    watch:{
+        getCarGoods:function(newVal){
+            this.curOrder = newVal[this.itemIndex];
+        },
+        itemIndex:function(newVal){
+            this.curOrder = this.getCarGoods[newVal];
+        }
+
     },
     components:{
        Radio 

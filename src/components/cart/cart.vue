@@ -5,10 +5,13 @@
         </div>
         <div class="adress-container">
             <div class="adress">地址...</div>
-            <div class="edit">编辑商品</div>
+            <div class="edit" @click="toggleEdit"><span v-show="!isEdit">编辑商品</span><span v-show="isEdit">取消编辑</span></div>
         </div>
         <div class="order-container">
             <Order v-for="(item,index) in getCarGoods" :key="index" :itemIndex="index"></Order>
+            <div class="confirm-container" v-show="showMask">
+                <Confirm title="确认删除吗？" @confirm="confirmDel" @cancel="cancelDel"></Confirm>
+            </div>
         </div>
         <div class="emptyBg" v-if="!getCarGoods.length">
             <img src="../../assets/images/buy-logo.png" alt="">
@@ -19,12 +22,18 @@
                <Radio :checked="ischecked" @checked="lock" @unchecked="unlock"></Radio>
                <p>全选</p>
            </div>
-           <div class="money">
-               总计：<span>{{getTotal.money | dollar}}</span>
+           <div class="controlBtns">
+               <div class="money" v-show="!isEdit">
+                    总计：<span>{{getTotal.money | dollar}}</span>
+                </div>
+                <div class="checkOut" :class="{red:getTotal.num !== 0,grey:getTotal.num === 0}" @click="payTheBill" v-show="!isEdit">
+                    <span class="leads">去结算</span><span>({{getTotal.num}}件)</span>
+                </div>
+                <div class="del" v-show="isEdit" @click="delOrders">
+                    删除
+                </div>
            </div>
-           <div class="checkOut" :class="{red:getTotal.num !== 0,grey:getTotal.num === 0}" @click="payTheBill">
-               <span class="leads">去结算</span><span>({{getTotal.num}}件)</span>
-           </div>
+           
         </div>
     </div>
 </template>
@@ -32,18 +41,25 @@
 import Header from 'base/header/header';
 import Order from 'components/orders/order';
 import Radio from 'base/radio/radio';
+import Confirm from 'base/confirm/confirm';
 
-import {mapGetters,mapActions} from 'vuex';
-
+import {mapGetters,mapActions,mapMutations} from 'vuex';
 export default {
     data(){
         return{
-            orderList:[],
-            ischecked: true
+            orderList:[],//购物车订单列表
+            ischecked:  true,//是否全选
+            isEdit: false//当前是否处于编辑状态
         }
+    },
+    beforeRouteEnter (to, from, next) {
+       next(vm => {
+           vm.ischecked = vm.getTotal.checkAll;
+        })
     },
     methods:{
         lock(){
+
             this.ischecked = true;
             var newarr = this.getCarGoods.map((item,index) =>{
                 item.checked = true;
@@ -52,6 +68,7 @@ export default {
             this.changeCarGoods(newarr);
         },
         unlock(){
+            // debugger;
             this.ischecked = false;
             var newarr = this.getCarGoods.map((item,index) =>{
                 item.checked = false;
@@ -60,22 +77,65 @@ export default {
             this.changeCarGoods(newarr);
         },
         payTheBill(){
+            if(this.getTotal.num === 0){return };
             alert("总共: $"+this.getTotal.money)
         },
-        ...mapActions(['changeCarGoods'])
+        toggleEdit(){
+            if(!this.isEdit){
+                this.isEdit = true;
+                var temp = JSON.stringify(this.getCarGoods);
+                this.copyList = JSON.parse(temp);
+                this.unlock();  
+                this.execDel = false;
+            }else{
+                this.isEdit = false;
+                if(!this.execDel){
+                    this.changeCarGoods(this.copyList);
+                }
+            }
+
+        },
+        delOrders(){
+            if(this.getTotal.num === 0){ return };
+            this.setMask(true);
+           
+        },
+        confirmDel(){
+            this.setMask(false);
+            this.execDel = true;
+        
+            var newarr = this.getCarGoods.filter(item =>{
+                return  item.checked === false;
+            })
+            this.changeCarGoods(newarr);
+            if(newarr.length === 0){
+                this.toggleEdit();
+                return;
+            }
+        },
+        cancelDel(){
+             this.setMask(false);
+             this.changeCarGoods(this.copyList);
+        },
+        ...mapActions(['changeCarGoods']),
+        ...mapMutations({
+            setMask: 'SET_MASK'
+        })
     },
     computed:{
-        ...mapGetters(['getCarGoods','getTotal'])
+        ...mapGetters(['getCarGoods','getTotal','showMask']),
+
     },
     watch:{
-        getTotal:function(){
+        getTotal:function(val){
             this.ischecked = this.getTotal.checkAll;
         }
     },
     components:{
         Header,
         Order,
-        Radio
+        Radio,
+        Confirm
     },
     filters:{
         dollar:function(input){
@@ -99,9 +159,33 @@ export default {
            padding: 0 5px;
            .adress{
                color:#666;
+               width: 4em;
+               height: 100%;
+                display:flex;
+                justify-content: center;
+                align-items: center;
            }
            .edit{
-               color:red;
+               width: 4em;
+               height: 100%;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+               span{
+                    color:red;
+                    flex: 1;
+               }
+               
+           }
+       }
+       .order-container{
+           position: relative;
+           .confirm-container{
+               position: absolute;
+                z-index: 991;
+               left: 50%;
+               top: 200px;
+               transform: translate3d(-50%,-50%,0);
            }
        }
        .footer{
@@ -116,6 +200,7 @@ export default {
             border-top:1px solid #eee;
             background-color: #fff; 
             display: flex;
+            justify-content: space-between;
             padding: 0 5px;
             .option{
                 width: 40px;
@@ -128,30 +213,46 @@ export default {
                     margin:3px 0 0;
                 }
             }
-            .money{
-                flex: 1;
+            .controlBtns{
+                width: 260px;
                 display: flex;
                 justify-content: flex-end;
-                align-items: center;
-                font-size: 1.3em;
-            }
-            .checkOut{
-                width: 130px;
-                 display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-left: 10px;
-                color:#fff;
-                .leads{
-                   font-size: 1.5em; 
+                .money{
+                    flex: 1;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    font-size: 1.3em;
                 }
-                &.red{
+                .checkOut{
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 10px;
+                    color:#fff;
+                    .leads{
+                    font-size: 1.5em; 
+                    }
+                    &.red{
+                        background-color: #e4393c;
+                    }
+                    &.grey{
+                        background-color: #666;
+                    }
+                }
+                .del{
+                    width: 130px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 10px;
+                    color:#fff;
                     background-color: #e4393c;
-                }
-                &.grey{
-                    background-color: #666;
+                     font-size: 1.5em; 
                 }
             }
+           
         }
         .emptyBg{
             position: fixed;

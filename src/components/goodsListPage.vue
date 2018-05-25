@@ -52,7 +52,7 @@
               </div>
               <div class="item-right">
                   <p class="title">{{item.describe}}</p>
-                  <p class="clearfix"><span class="goodsPrice pull-left text-danger">{{item.price}}</span><button class="addBtn pull-right btn btn-danger" @click="addInCar(item)">加入购物车</button></p>
+                  <p class="clearfix"><span class="goodsPrice pull-left text-danger">{{item.price | toMoney}}</span><button class="addBtn pull-right btn btn-danger" @click="addInCar(item)">加入购物车</button></p>
               </div>
             </li>
           </ul>
@@ -119,6 +119,11 @@ export default {
   components: {
     vertialNav,
      toastSqure
+  },
+  filters:{
+    toMoney: function(input){
+      return '$'+input;
+    }
   }
 }; //export
 </script>  

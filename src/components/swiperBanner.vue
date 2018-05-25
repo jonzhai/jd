@@ -1,14 +1,7 @@
 <template>
 	<div id="banner">
 	    <swiper :options="swiperOption" ref="mySwiper" @click="test">
-        <swiper-slide><img src="../assets/images/l1.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l2.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l3.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l4.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l5.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l6.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l7.jpg"></swiper-slide>
-        <swiper-slide><img src="../assets/images/l8.jpg"></swiper-slide>
+        <swiper-slide v-for="(item,index) in datalist" :key="index"><img :src="getUrl(item)"></swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
 	</div>
@@ -30,22 +23,32 @@
             },//可选选项，自动滑动
             speed:1000,
             loop:true,
+            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true,//修改swiper的父元素时，自动初始化swiper
             pagination: {
               el: '.swiper-pagination',
               clickable: true
             }
-          }
+          },
+          datalist:[1,2,3,4,5,6,7,8],
         }
       },
-        methods:{
-          toLogin: function(){
-            this.$router.push({path:'/login'})
-          },
-          test(e){
-            console.log(e)
-          },
+      created:function(){
+        //当前轮播图的基准url
+        this.baseURL = 'src/assets/images/';
+      },
+      methods:{
+        toLogin: function(){
+          this.$router.push({path:'/login'})
+        },
+        test(e){
+          console.log(e)
+        },
+        getUrl(index){
+          return this.baseURL+`l${index}.jpg`;
+        }
 
-        }//methods
+      }//methods
 
     }//export
 

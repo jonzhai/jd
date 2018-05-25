@@ -18,19 +18,21 @@ export default {
             isChecked: true
         }
     },
+    created:function(){
+        this.isChecked = this.checked;
+    },
     watch:{
-        checked:function(){
-            this.isChecked = this.checked;
+        checked:function(val){
+            this.isChecked = val;
         }
     },
     methods:{
         checkItem(){
-            // this.isChecked = !this.isChecked
+            this.isChecked = !this.isChecked
             if(this.isChecked){
-                this.$emit('unchecked')
-            }else{
                 this.$emit('checked')
-                
+            }else{
+                this.$emit('unchecked')
             }
         },
     }

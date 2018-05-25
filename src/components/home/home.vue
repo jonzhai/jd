@@ -2,8 +2,8 @@
   <div class="home">
       <common-header></common-header>
       <swiper-banner></swiper-banner>
-      <navs></navs>
-      <product></product>
+      <Nav></Nav>
+      <Product></Product>
       <jd-market></jd-market>
       <common-footer :index="0"></common-footer>
   </div>
@@ -13,18 +13,18 @@
   import commonHeader from '../common_header.vue';
   import swiperBanner from '../swiperBanner.vue';
   import commonFooter from '../common_footer.vue';
-  import navs from '../nav.vue';
+  import Nav from '../nav.vue';
   import product from '../product.vue';
   import jdMarket from '../jdMarket.vue';
   export default {
     name: 'app',
     components:{
-      "common-header":commonHeader,
-      "swiper-banner":swiperBanner,
-      "common-footer":commonFooter,
-      "navs":navs,
-      "product":product,
-      "jd-market":jdMarket
+      "commonHeader":commonHeader,
+      "swiperBanner":swiperBanner,
+      "commonFooter":commonFooter,
+      "Nav":Nav,
+      "Product":product,
+      "jdMarket":jdMarket
     },
     methods:{
         toLogin:function(){
