@@ -16,6 +16,7 @@
             overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            background-color: #eee;
         }
         
         #dv1 {
@@ -29,6 +30,7 @@
         #dv1 canvas {
             width: 100%;
             height: 100%;
+            background-color: #fff;
         }
         
         .toolBar {
@@ -63,7 +65,7 @@
         <button onclick="Sinature.clear()">清空</button>
         <button onclick="Sinature.save()" id="btn">保存</button>
         <button onclick="Sinature.show()">查看</button>
-        <!-- <button onclick="Sinature.Eraser(event)">橡皮擦</button> -->
+        <button onclick="Sinature.Eraser()">橡皮擦</button>
         <!-- <input type="file" onclick="Sinature.upload(event)" value="上传" accept="image/*" /> -->
     </div>
 
@@ -88,6 +90,10 @@
             //存储canvas相对于body的offset
             offset: {},
 
+            eraser: null,
+            //存储eraser是否显示的变量
+            showEraser: false,
+
             //初始化签名画布
             init: function(selector) {
                 var me = this;
@@ -104,9 +110,7 @@
                  */
                 me.canvas.width = me.canvas.offsetWidth;
                 me.canvas.height = me.canvas.offsetHeight;
-                //绘制白色背景
-                me.context.fillStyle = "#fff";
-                me.context.fillRect(0, 0, me.canvas.width, me.canvas.height);
+
 
                 //解决绘图不清晰的问题
                 if (window.devicePixelRatio) {
@@ -114,7 +118,9 @@
                     me.canvas.width = me.canvas.width * window.devicePixelRatio;
                     me.context.scale(window.devicePixelRatio, window.devicePixelRatio);
                 };
-
+                //绘制白色背景
+                // me.context.fillStyle = "#fff";
+                // me.context.fillRect(0, 0, me.canvas.width, me.canvas.height);
                 //单独抽出绘制函数，利于绑定和解绑
                 var handlerMove = function(e) {
                     if (!me.isTouchMove) {
@@ -130,12 +136,17 @@
                         me.pos.endY = touchTarget.clientY - me.offset.top;
 
                         //绘制
-                        me._draw();
+                        if (!me.showEraser) {
+                            me._draw();
+                        } else {
+                            me._undraw(touchTarget);
+                        }
+
                         //本次绘画完成，将下一次绘画的开始点置为本次的结束点
                         me.pos.startX = me.pos.endX;
                         me.pos.startY = me.pos.endY;
                     }, 20)
-
+                    e.preventDefault();
                 }
 
                 //绑定touchstart事件
@@ -158,6 +169,11 @@
                     //在触摸结束事件中移除move事件
                     me.canvas.removeEventListener('touchmove', handlerMove);
                 })
+
+                //生成eraser
+                this.eraser = document.createElement('div');
+                this.eraser.style.cssText = "width:20px;height:20px;border:1px solid #000;border-radius:10px;position:absolute;left:0;top:0;display:none";
+                document.body.appendChild(this.eraser)
             },
 
             //清空画布
@@ -170,73 +186,78 @@
                 this.img = url;
 
                 //后续实现方式
-                // var fileName = prompt('请输入文件名！');
-                // if (!fileName) {
-                //     alert('请输入正确的文件名！');
-                //     return;
-                // }
-                // var sinature = localStorage.getItem('sinature');
-                // if (!sinature) {
-                //     sinature = new Array();
-                //     sinature.push({
-                //         fileName: fileName,
-                //         src: url
-                //     });
-                //     localStorage.setItem('sinature', JSON.stringify(sinature));
-                // } else {
-                //     sinature = JSON.parse(sinature);
-                //     var index = sinature.findIndex(function(item) {
-                //         item.fileName === fileName;
-                //     })
-                //     if (index > -1) {
-                //         alert('当前文件名已存在，请重新输入文件名！');
-                //         return;
-                //     }
-                //     sinature.push({
-                //         fileName: fileName,
-                //         src: url
-                //     });
-                //     localStorage.setItem('sinature', JSON.stringify(sinature));
-                // }
+                var fileName = prompt('请输入文件名！');
+                if (!fileName) {
+                    alert('请输入正确的文件名！');
+                    return;
+                }
+                var sinature = localStorage.getItem('sinature');
+                if (!sinature) {
+                    sinature = new Array();
+                    sinature.push({
+                        fileName: fileName,
+                        src: url
+                    });
+                    localStorage.setItem('sinature', JSON.stringify(sinature));
+                } else {
+                    sinature = JSON.parse(sinature);
+                    var index = sinature.findIndex(function(item) {
+                        return item.fileName === fileName;
+                    })
+                    if (index > -1) {
+                        alert('当前文件名已存在，请重新输入文件名！');
+                        return;
+                    }
+                    sinature.unshift({
+                        fileName: fileName,
+                        src: url
+                    });
+                    localStorage.setItem('sinature', JSON.stringify(sinature));
+                }
             },
             show: function() {
-                // var sinature = localStorage.getItem('sinature');
-                // if (!sinature) {
-                //     alert('当前未存储任何签名，请先保存！')
-                //     return;
-                // }
-                // window.open('showSinature.html', '_self')
-
-
-
-                //暂时以此简单方式实现
-                var img = new Image();
-                img.className = "sinature";
-                img.onload = function() {
-                    document.body.appendChild(this)
+                var sinature = localStorage.getItem('sinature');
+                if (!sinature) {
+                    alert('当前未存储任何签名，请先保存！')
+                    return;
                 }
-                img.src = this.img;
+                window.open('showSinature.html', '_self')
 
             },
-            upload: function(e) {
-                var ipt = e.target,
-                    me = this;
-                ipt.onchange = function() {
-                    var file = this.files[0],
-                        reader = new FileReader();
-                    reader.onload = function(e) {
-                        var img = new Image();
-                        img.onload = function() {
-                            me.context.drawImage(this, 10, 10, 200, 200);
-                        }
-                        img.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
+            //暂时取消图片上传
+            // upload: function(e) {
+            //     var ipt = e.target,
+            //         me = this;
+            //     ipt.onchange = function() {
+            //         var file = this.files[0],
+            //             reader = new FileReader();
+            //         reader.onload = function(e) {
+            //             var img = new Image();
+            //             img.onload = function() {
+            //                 me.context.drawImage(this, 10, 10, 200, 200);
+            //             }
+            //             img.src = e.target.result;
+            //         };
+            //         reader.readAsDataURL(file);
 
-                }
-            },
+            //     }
+            // },
             Eraser: function(e) {
+                this.showEraser = !this.showEraser;
+                if (this.showEraser) {
+                    this.eraser.style.display = "block";
+                    this.eraser.style.left = 10 + 'px';
+                    this.eraser.style.top = 10 + 'px';
+                } else {
+                    this.eraser.style.display = "none";
+                }
 
+            },
+            _undraw(event) {
+                var ctx = this.context;
+                ctx.clearRect(event.clientX - 10, event.clientY - 10, 20, 20);
+                this.eraser.style.left = (event.clientX - 10) + 'px';
+                this.eraser.style.top = (event.clientY - 10) + 'px';
             },
             _draw() {
                 var ctx = this.context;
@@ -266,6 +287,7 @@
 
         }
         Sinature.init('#canvas');
+        //禁止浏览器默认行为
         window.onload = function() {
             document.body.addEventListener("touchmove", function(event) {
                 event.preventDefault();

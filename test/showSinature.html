@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable = no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>sinatures</title>
+    <script src="./myTouch.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         .container {
@@ -42,6 +49,10 @@
             border-bottom: 1px solid #eee;
         }
         
+        ul li.active {
+            color: #f00;
+        }
+        
         .sinature-container {
             flex: 1;
             display: flex;
@@ -50,7 +61,7 @@
         }
         
         .sinature-container img {
-            width: 90%;
+            width: 100%;
             height: auto;
         }
     </style>
@@ -71,30 +82,85 @@
 
     </div>
     <script>
-        var sinature = localStorage.getItem('sinature');
-        if (!sinature) {
-            alert('当前未存储任何签名，请先保存后查看！')
-        }
-        var container = document.querySelector('#list-container'),
-            img = document.querySelector('#sinature'),
-            str = '';
-        sinature = JSON.parse(sinature);
-        sinature.forEach(element => {
-            str += `<li data-name="${element.fileName}">${element.fileName}</li>`
-        });
-        container.innerHTML = str;
-        container.addEventListener('click', function(e) {
-            debugger;
-            if (e.target.nodeName !== 'Li') {
-                return;
-            }
-            var fileName = e.target.dataset.name;
-            sinature.forEach(item => {
-                if (item.fileName === fileName) {
-                    img.src = item.src;
+        window.onload = function() {
+                var sinature = localStorage.getItem('sinature');
+                if (!sinature) {
+                    alert('当前未存储任何签名，请先保存后查看！')
                 }
-            })
-        })
+                var container = document.querySelector('#list-container'),
+                    img = document.querySelector('#sinature'),
+                    str = '';
+                sinature = JSON.parse(sinature);
+
+                //遍历生成左侧菜单列表
+                sinature.forEach((element, index) => {
+                    if (index === 0) {
+                        str += `<li class="active" data-name="${element.fileName}">${element.fileName}</li>`;
+                    } else {
+                        str += `<li data-name="${element.fileName}">${element.fileName}</li>`;
+                    }
+
+                });
+                container.innerHTML = str;
+                var childArr = Array.prototype.slice.call(container.children);
+
+                //获取图片函数
+                function getImg(et) {
+                    var fileName = et.dataset.name;
+                    try {
+                        sinature.forEach(item => {
+                            if (item.fileName === fileName) {
+                                img.src = item.src;
+                                throw 'yizhaodao!'
+                            }
+                        })
+                    } catch (err) {
+                        return;
+                    }
+                }
+                //默认获取第一张
+                getImg(childArr[0]);
+                container.addEventListener('click', function(e) {
+
+                    if (e.target.nodeName !== 'LI') {
+                        return;
+                    }
+                    //利用这个跳出forEach循环
+                    try {
+                        childArr.forEach(function(item) {
+                            if (item.classList.contains('active')) {
+                                item.classList.remove('active');
+                                throw 'yishanchu!'
+                            }
+                        })
+                    } catch (err) {
+                        e.target.classList.add('active')
+                    }
+                    getImg(e.target);
+
+                })
+
+                //注意，移动设备不支持contextmenu事件，能触发，但是event的参数全部错误
+                $$(container).on('longtap', function(et) {
+                    if (et.target.nodeName !== "LI") {
+                        return;
+                    }
+                    if (confirm('确认删除此项吗？')) {
+                        var index = sinature.findIndex(function(item) {
+                            return item.fileName === et.target.dataset.name;
+                        })
+                        if (index > -1) {
+                            sinature.splice(index, 1);
+                            localStorage.setItem('sinature', JSON.stringify(sinature));
+                            window.location.reload();
+                        }
+                    }
+                    et.preventDefault();
+                })
+                container.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
+            } //onload事件
     </script>
 </body>
 
