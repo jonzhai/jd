@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable = no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>sinatures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #eee;
+            display: flex;
+        }
+        
+        .lists {
+            width: 80px;
+            overflow: hidden;
+            border-right: 1px solid #eee;
+        }
+        
+        .lists ul {
+            width: 100%;
+            overflow: auto;
+            list-style: none;
+        }
+        
+        ul li {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sinature-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sinature-container img {
+            width: 90%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="lists">
+            <ul id="list-container">
+
+            </ul>
+
+
+        </div>
+        <div class="sinature-container">
+            <img src="#" id="sinature">
+        </div>
+
+    </div>
+    <script>
+        var sinature = localStorage.getItem('sinature');
+        if (!sinature) {
+            alert('当前未存储任何签名，请先保存后查看！')
+        }
+        var container = document.querySelector('#list-container'),
+            img = document.querySelector('#sinature'),
+            str = '';
+        sinature = JSON.parse(sinature);
+        sinature.forEach(element => {
+            str += `<li data-name="${element.fileName}">${element.fileName}</li>`
+        });
+        container.innerHTML = str;
+        container.addEventListener('click', function(e) {
+            debugger;
+            if (e.target.nodeName !== 'Li') {
+                return;
+            }
+            var fileName = e.target.dataset.name;
+            sinature.forEach(item => {
+                if (item.fileName === fileName) {
+                    img.src = item.src;
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
