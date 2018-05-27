@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="tel:18819825014">18819825014</a><br>
+    <a href="Mailto:jonzhai@126.com">jonzhai@126.com</a><br>
+
+
+    <input type="url">
+    <select name="" id="sel" multiple>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+
+    </select>
+
+    <button id="btn">dianji</button>
+    <script>
+        var sel = document.querySelector('#sel'),
+            btn = document.querySelector('#btn');
+        btn.onclick = function() {
+            console.log(sel.getAttribute('multiple'))
+        }
+    </script>
+</body>
+
+</html>

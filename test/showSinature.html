@@ -64,6 +64,10 @@
             width: 100%;
             height: auto;
         }
+        
+        body {
+            -webkit-touch-callout: none !important;
+        }
     </style>
 </head>
 
@@ -157,7 +161,10 @@
                     }
                     et.preventDefault();
                 })
-                container.addEventListener('contextmenu', function(e) {
+                window.addEventListener('ontouchstart ', function(e) {
+                    e.preventDefault();
+                });
+                window.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
                 });
             } //onload事件
